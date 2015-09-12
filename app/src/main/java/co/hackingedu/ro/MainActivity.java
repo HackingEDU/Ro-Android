@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position % 4) {
                     case 0:
-                        return "Selection";
+                        return "General";
                     case 1:
-                        return "Actualités";
+                        return "Map";
                     case 2:
-                        return "Professionnel";
+                        return "FAQ";
                     case 3:
-                        return "Divertissement";
+                        return "Schedule";
                 }
                 return "";
             }
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Have fun at HackingEDU :)", Toast.LENGTH_SHORT).show();
                 }
             });
     }

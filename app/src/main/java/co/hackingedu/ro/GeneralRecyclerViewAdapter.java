@@ -5,28 +5,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
+
+import co.hackingedu.ro.Info.GeneralInfo;
 
 /**
  * Created by florentchampigny on 24/04/15.
  */
-public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecyclerViewAdapter.GeneralViewHolder> {
 
-    List<Object> contents;
+    List<GeneralInfo> generalInfoList;
 
-    static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
 
-    public TestRecyclerViewAdapter(List<Object> contents) {
-        this.contents = contents;
+
+    public GeneralRecyclerViewAdapter(List<GeneralInfo> generalInfoList) {
+        this.generalInfoList = generalInfoList;
     }
+
+
 
     @Override
     public int getItemViewType(int position) {
         switch (position) {
-            case 0:
-                return TYPE_HEADER;
             default:
                 return TYPE_CELL;
         }
@@ -34,36 +37,40 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return contents.size();
+        return generalInfoList.size();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GeneralViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = null;
 
         switch (viewType) {
-            case TYPE_HEADER: {
-                view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.list_item_card_big, parent, false);
-                return new RecyclerView.ViewHolder(view) {
-                };
-            }
             case TYPE_CELL: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_card_small, parent, false);
-                return new RecyclerView.ViewHolder(view) {
+                return new GeneralViewHolder(view) {
                 };
             }
         }
         return null;
     }
 
+    public static class GeneralViewHolder extends RecyclerView.ViewHolder {
+
+        protected TextView mText;
+
+        public GeneralViewHolder(View v) {
+            super(v);
+            mText = (TextView) v.findViewById(R.id.textView);
+        }
+    }
+
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(GeneralViewHolder holder, int position) {
+
         switch (getItemViewType(position)) {
-            case TYPE_HEADER:
-                break;
             case TYPE_CELL:
                 break;
         }

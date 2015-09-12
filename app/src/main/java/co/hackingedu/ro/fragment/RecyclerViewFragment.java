@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
-import co.hackingedu.ro.R;
-import co.hackingedu.ro.TestRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.hackingedu.ro.GeneralRecyclerViewAdapter;
+import co.hackingedu.ro.Info.GeneralInfo;
+import co.hackingedu.ro.R;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -23,11 +25,11 @@ import java.util.List;
 public class RecyclerViewFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private R mAdapter;
 
-    private static final int ITEM_COUNT = 100;
+    private static final int ITEM_COUNT = 10;
 
-    private List<Object> mContentItems = new ArrayList<>();
+    private List<GeneralInfo> mContentItems = new ArrayList<>();
 
     public static RecyclerViewFragment newInstance() {
         return new RecyclerViewFragment();
@@ -46,13 +48,17 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new TestRecyclerViewAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new GeneralRecyclerViewAdapter(mContentItems));
         mRecyclerView.setAdapter(mAdapter);
 
+
         {
-            for (int i = 0; i < ITEM_COUNT; ++i)
-                mContentItems.add(new Object());
-            mAdapter.notifyDataSetChanged();
+            for (int i = 0; i < ITEM_COUNT; ++i) {
+                GeneralInfo item = new GeneralInfo();
+                item.text = "lol"+i;
+                mContentItems.add(item);
+                mAdapter.notifyDataSetChanged();
+            }
         }
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
