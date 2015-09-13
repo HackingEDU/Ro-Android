@@ -24,12 +24,11 @@ import co.hackingedu.ro.R;
  */
 public class RecyclerViewFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private R mAdapter;
+    public RecyclerView mRecyclerView;
+    public RecyclerViewMaterialAdapter mAdapter;
+    public static final int ITEM_COUNT = 10;
 
-    private static final int ITEM_COUNT = 10;
-
-    private List<GeneralInfo> mContentItems = new ArrayList<>();
+    public List<GeneralInfo> mContentItems = new ArrayList<GeneralInfo>();
 
     public static RecyclerViewFragment newInstance() {
         return new RecyclerViewFragment();
@@ -49,18 +48,24 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new RecyclerViewMaterialAdapter(new GeneralRecyclerViewAdapter(mContentItems));
+
+
+            for (int i = 0; i < ITEM_COUNT; ++i) {
+                GeneralInfo item = new GeneralInfo();
+                item.text ="FOOL"+i;
+                mContentItems.add(item);
+            }
+        mAdapter.notifyDataSetChanged();
+
         mRecyclerView.setAdapter(mAdapter);
 
 
-        {
-            for (int i = 0; i < ITEM_COUNT; ++i) {
-                GeneralInfo item = new GeneralInfo();
-                item.text = "lol"+i;
-                mContentItems.add(item);
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
+
+
+
+
+
+
 }

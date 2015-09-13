@@ -58,17 +58,21 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
 
     public static class GeneralViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView mText;
+        public TextView mText;
 
         public GeneralViewHolder(View v) {
             super(v);
             mText = (TextView) v.findViewById(R.id.textView);
+
         }
     }
 
 
     @Override
     public void onBindViewHolder(GeneralViewHolder holder, int position) {
+
+        GeneralInfo ci = generalInfoList.get(position);
+        holder.mText.setText(ci.text);
 
         switch (getItemViewType(position)) {
             case TYPE_CELL:
