@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import co.hackingedu.ro.fragment.FaqViewFragment;
+import co.hackingedu.ro.fragment.MapViewFragment;
 import co.hackingedu.ro.fragment.RecyclerViewFragment;
 
 
@@ -62,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
                 switch (position % 4) {
-                    //case 0:
-                    //    return RecyclerViewFragment.newInstance();
-                    //case 1:
-                    //    return RecyclerViewFragment.newInstance();
-                    //case 2:
-                    //    return RecyclerViewFragment.newInstance();
+                    case 0:
+                        return RecyclerViewFragment.newInstance();
+                    case 1:
+                        return MapViewFragment.newInstance();
+                    case 2:
+                        return FaqViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
