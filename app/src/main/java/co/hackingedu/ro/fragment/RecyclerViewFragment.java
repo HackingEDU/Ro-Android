@@ -26,7 +26,7 @@ public class RecyclerViewFragment extends Fragment {
 
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
-    public static final int ITEM_COUNT = 10;
+    public static final int ITEM_COUNT = 4;
 
     public List<GeneralInfo> mContentItems = new ArrayList<GeneralInfo>();
 
@@ -52,9 +52,9 @@ public class RecyclerViewFragment extends Fragment {
 
             for (int i = 0; i < ITEM_COUNT; ++i) {
                 GeneralInfo item = new GeneralInfo();
-                item.text ="FOOL"+i;
                 mContentItems.add(item);
             }
+
         mAdapter.notifyDataSetChanged();
 
         mRecyclerView.setAdapter(mAdapter);

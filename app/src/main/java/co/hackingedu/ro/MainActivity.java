@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     //case 1:
                     //    return RecyclerViewFragment.newInstance();
                     //case 2:
-                    //    return WebViewFragment.newInstance();
+                    //    return RecyclerViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
