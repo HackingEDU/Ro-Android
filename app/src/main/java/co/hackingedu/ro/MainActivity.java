@@ -12,13 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import co.hackingedu.ro.fragment.FaqViewFragment;
 import co.hackingedu.ro.fragment.MapViewFragment;
 import co.hackingedu.ro.fragment.RecyclerViewFragment;
+import co.hackingedu.ro.fragment.ScheduleViewFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                         return MapViewFragment.newInstance();
                     case 2:
                         return FaqViewFragment.newInstance();
+                    case 3:
+                        return ScheduleViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
