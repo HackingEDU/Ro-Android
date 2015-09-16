@@ -33,7 +33,7 @@
 
 
 
-        <TextView
+        <co.hackingedu.ro.LatoTextView
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:text="Prizes include Macbook Pro Laptops, Oculus Rift, Apple Watches, Amazon Web Services, Namecheap Domains, and more."

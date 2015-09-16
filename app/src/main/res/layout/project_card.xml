@@ -33,7 +33,7 @@
 
 
 
-    <TextView
+        <co.hackingedu.ro.LatoTextView
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="Project must be submitted to ChallengePost by 10:30am or else team won’t be eligible for prizes."

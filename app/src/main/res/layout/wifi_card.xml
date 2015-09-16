@@ -30,7 +30,7 @@
             android:layout_gravity="left|center_vertical" />
 
 
-        <TextView
+        <co.hackingedu.ro.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -40,7 +40,7 @@
         android:layout_gravity="center" android:layout_marginBottom="10dp"/>
 
 
-    <TextView
+        <co.hackingedu.ro.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password: realwifi123"
