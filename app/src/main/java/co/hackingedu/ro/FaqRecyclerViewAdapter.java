@@ -2,6 +2,8 @@ package co.hackingedu.ro;
 /**
  * Created by Spicycurryman on 9/14/15.
  */
+
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,16 +53,21 @@ public class FaqRecyclerViewAdapter extends RecyclerView.Adapter<FaqRecyclerView
         return null;
     }
 
-    public static class FaqViewHolder extends RecyclerView.ViewHolder {
+    public static class FaqViewHolder extends RecyclerView.ViewHolder  {
 
         public TextView question;
         public TextView answer;
+        public CardView faq_card;
 
         public FaqViewHolder(View v) {
             super(v);
             question = (TextView) v.findViewById(R.id.question);
             answer = (TextView) v.findViewById(R.id.answer);
+            faq_card = (CardView) v.findViewById(R.id.faq_card_view);
+
         }
+
+
     }
 
     @Override

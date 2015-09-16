@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Material View Pager</string>
+    <string name="app_name">HackingEDU</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_map_view_image">MapViewImageActivity</string>
 </resources>

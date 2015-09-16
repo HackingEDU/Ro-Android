@@ -31,4 +31,14 @@
         <item name="color">@color/drawerArrowColor</item>
     </style>
 
+
+    <style name="WithBar" parent="android:Theme.Holo.Light.DarkActionBar">
+
+
+
+    </style>
+
+
+
+
 </resources>

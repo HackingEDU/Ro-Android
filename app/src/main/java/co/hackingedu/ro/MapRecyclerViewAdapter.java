@@ -4,6 +4,9 @@ package co.hackingedu.ro;
  * Created by Spicycurryman on 9/14/15.
  */
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,15 +59,34 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
         return null;
     }
 
-    public static class MapViewHolder extends RecyclerView.ViewHolder {
+    public static class MapViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView map_num;
         public ImageView map_image;
+        public CardView map_card_view;
+        private final Context context;
+
 
         public MapViewHolder(View v) {
             super(v);
             map_num = (TextView) v.findViewById(R.id.map_num);
             map_image = (ImageView) v.findViewById(R.id.map);
+            map_card_view = (CardView) v.findViewById(R.id.map_card_view);
+            context = v.getContext();
+
+            map_card_view.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            final Intent intent;
+            intent =  new Intent(context, MapViewImageActivity.class);
+            context.startActivity(intent);
+
+
+
+
         }
     }
 
