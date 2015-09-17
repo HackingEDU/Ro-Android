@@ -91,17 +91,6 @@ public class ScheduleViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
-
-        try {
-            Log.i("ScheduleViewFragment", "starting getting");
-            Log.i("ScheduleViewFragment", "post getting: "
-                    + new JsonManager()
-                    .get("name", 0, (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
