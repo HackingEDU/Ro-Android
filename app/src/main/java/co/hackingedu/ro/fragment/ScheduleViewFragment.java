@@ -29,7 +29,6 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
-import co.hackingedu.ro.backend.JsonManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -63,18 +62,8 @@ public class ScheduleViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
-
-        try {
-            Log.i("ScheduleViewFragment", "starting getting");
-            Log.i("ScheduleViewFragment", "post getting: "
-                    + new JsonManager()
-                    .get("name", 0, (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -88,6 +77,7 @@ public class ScheduleViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
 
+        // save local copy of JSON arrays from backend Manager
         try {
             eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
         } catch (IOException e) {
@@ -95,15 +85,19 @@ public class ScheduleViewFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // loop through each event in JSON Array and do frontend stuff!
         for (int i = 0; i < eventArray.length(); i++)
         {
             ScheduleInfo item = new ScheduleInfo();
             try {
+                // parsing array into String
                 item.schedule_event = (String) ((JSONObject) eventArray.get(i)).get(NAME_QUERY);
+                item.time_location = (String) ((JSONObject) eventArray.get(i)).get(TIME_QUERY)
+                        + " | " + (String) ((JSONObject) eventArray.get(i)).get(LOCATION_QUERY);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            item.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
             mContentItems.add(item);
         }
 
