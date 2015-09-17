@@ -23,9 +23,14 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 
-
+/**
+ * Fragment for displaying Schedule View
+ */
 public class ScheduleViewFragment extends Fragment {
 
+    /**
+     *
+     */
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
     public static final int ITEM_COUNT = 4;
