@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class ScheduleViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BackendManager backendManager = new BackendManager();
         try {
-            backendManager.connectFaqs();
+            backendManager.get(backendManager.EVENTS_ENDPOINT);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
