@@ -37,22 +37,47 @@ public class ScheduleViewFragment extends Fragment {
 
     /**
      * BackendManager to handle API Calls
-     * Utilize JsonManager to pull Strings out of returned Arrays
      */
     private BackendManager backendManager;
 
+    /**
+     * JSONArray field to store response from backendManager
+     */
     private JSONArray eventArray;
 
+    /**
+     * final string for querying name
+     */
     private final String NAME_QUERY = "name";
+
+    /**
+     * final string for querying time
+     */
     private final String TIME_QUERY = "time";
+
+    /**
+     * final string for querying location
+     */
     private final String LOCATION_QUERY = "location";
 
     /**
-     *
+     * final string for querying day
      */
+    private final String DAY_QUERY = "day";
+
+    /**
+     * final string for querying image
+     */
+    private final String IMAGE_QUERY = "image";
+
+    /**
+     * final string for querying about
+     */
+    private final String ABOUT_QUERY = "about";
+
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
-    public static final int ITEM_COUNT = 4;
+    public static final int ITEM_COUNT = 4; // not really necessary because JSONArray has length()
 
     public List<ScheduleInfo> mContentItems = new ArrayList<ScheduleInfo>();
 
@@ -61,7 +86,9 @@ public class ScheduleViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
@@ -101,6 +128,7 @@ public class ScheduleViewFragment extends Fragment {
             mContentItems.add(item);
         }
 
+        // static examples
         ScheduleInfo item1 = new ScheduleInfo();
         item1.schedule_event = "Badge Pickup";
         item1.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
