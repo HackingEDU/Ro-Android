@@ -16,15 +16,42 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.hackingedu.ro.FaqRecyclerViewAdapter;
 import co.hackingedu.ro.Info.FaqInfo;
+import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
+import co.hackingedu.ro.backend.BackendManager;
 
 
 public class FaqViewFragment extends Fragment {
+
+    /**
+     * BackendManager to handle API Calls
+     */
+    private BackendManager backendManager;
+
+    /**
+     * JSONArray field to store response from backendManager
+     */
+    private JSONArray faqsArray;
+
+    /**
+     * final string for querying question
+     */
+    private final String QUESTION_QUERY = "q";
+
+    /**
+     * final string for querying answer
+     */
+    private final String ANSWER_QUERY = "a";
 
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
@@ -38,6 +65,8 @@ public class FaqViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // instantiate backendManager to begin api calls!
+        backendManager = new BackendManager();
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -51,6 +80,30 @@ public class FaqViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new FaqRecyclerViewAdapter(mContentItems));
 
+        // save local copy of JSON arrays from backend Manager
+        try {
+            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        // loop through each faq in JSON Array and do frontend stuff!
+        for (int i = 0; i < faqsArray.length(); i++)
+        {
+
+            FaqInfo item = new FaqInfo();
+            try {
+                // parsing array into String
+                item.question = (String) ((JSONObject) faqsArray.get(i)).get(QUESTION_QUERY);
+                item.answer = (String) ((JSONObject) faqsArray.get(i)).get(ANSWER_QUERY);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            mContentItems.add(item);
+        }
 
         FaqInfo item1 = new FaqInfo();
         item1.question = "Where/when to submit my hack?";
