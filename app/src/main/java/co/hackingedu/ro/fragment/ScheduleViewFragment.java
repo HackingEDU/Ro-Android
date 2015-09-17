@@ -20,6 +20,10 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+<<<<<<< HEAD
+=======
+
+>>>>>>> e4f9896... begin replacing JSONManager
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
-import co.hackingedu.ro.backend.JSONManager;
+import co.hackingedu.ro.backend.JsonManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -37,6 +41,7 @@ public class ScheduleViewFragment extends Fragment {
 
     /**
      * BackendManager to handle API Calls
+<<<<<<< HEAD
      */
     private BackendManager backendManager;
 
@@ -67,6 +72,20 @@ public class ScheduleViewFragment extends Fragment {
 
     /**
      * final string for querying image
+=======
+     * Utilize JsonManager to pull Strings out of returned Arrays
+     */
+    private BackendManager backendManager;
+
+    private JSONArray eventArray;
+
+    private final String NAME_QUERY = "name";
+    private final String TIME_QUERY = "time";
+    private final String LOCATION_QUERY = "location";
+
+    /**
+     *
+>>>>>>> e4f9896... begin replacing JSONManager
      */
     private final String IMAGE_QUERY = "image";
 
@@ -86,11 +105,27 @@ public class ScheduleViewFragment extends Fragment {
     }
 
     @Override
+<<<<<<< HEAD
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
+=======
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        backendManager = new BackendManager();
+
+        try {
+            Log.i("ScheduleViewFragment", "starting getting");
+            Log.i("ScheduleViewFragment", "post getting: "
+                    + new JsonManager()
+                    .get("name", 0, (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+>>>>>>> e4f9896... begin replacing JSONManager
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -104,7 +139,10 @@ public class ScheduleViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
 
+<<<<<<< HEAD
         // save local copy of JSON arrays from backend Manager
+=======
+>>>>>>> e4f9896... begin replacing JSONManager
         try {
             eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
         } catch (IOException e) {
@@ -112,12 +150,16 @@ public class ScheduleViewFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
 
         // loop through each event in JSON Array and do frontend stuff!
+=======
+>>>>>>> e4f9896... begin replacing JSONManager
         for (int i = 0; i < eventArray.length(); i++)
         {
             ScheduleInfo item = new ScheduleInfo();
             try {
+<<<<<<< HEAD
                 // parsing array into String
                 item.schedule_event = (String) ((JSONObject) eventArray.get(i)).get(NAME_QUERY);
                 item.time_location = (String) ((JSONObject) eventArray.get(i)).get(TIME_QUERY)
@@ -129,6 +171,16 @@ public class ScheduleViewFragment extends Fragment {
         }
 
         // static examples
+=======
+                item.schedule_event = (String) ((JSONObject) eventArray.get(i)).get(NAME_QUERY);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            item.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
+            mContentItems.add(item);
+        }
+
+>>>>>>> e4f9896... begin replacing JSONManager
         ScheduleInfo item1 = new ScheduleInfo();
         item1.schedule_event = "Badge Pickup";
         item1.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";

@@ -96,7 +96,7 @@ public class BackendManager {
             responseStrBuilder.append(inputStr);
         }
 
-        JSONObject json;
+        // TODO: error handling
         Object responseObject;
         JSONArray responseJsonArray;
         JSONObject responseJsonObject;
