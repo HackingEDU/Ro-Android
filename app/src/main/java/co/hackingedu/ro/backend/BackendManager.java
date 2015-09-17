@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import android.os.StrictMode;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,10 +67,71 @@ public class BackendManager {
 
     /**
      * General get function to take advantage of the specified Endpoints
+<<<<<<< HEAD
      * @param _endpoint final endpoint to call api
      * @return Object to parse as JSONArray or JSONObject - needs more robustness on this end
      * @throws IOException I/O Stream error getting input from API
      * @throws JSONException JSON conversion error on Array vs Object
+=======
+     * @param _endpoint
+     * @return
+     * @throws IOException
+     * @throws JSONException
+     */
+    public Object get(String _endpoint) throws IOException, JSONException {
+        // build URL String
+        String urlString = ""
+                + NODE_ENDPOINT
+                + _endpoint;
+
+        // prepare URL for connection
+        url = new URL(urlString);
+
+        // open stream for reading input
+        InputStream inputStream = url.openStream();
+        InputStreamReader reader = new InputStreamReader(inputStream);
+
+        // buffer stream and read to String
+        BufferedReader streamReader = new BufferedReader(reader);
+        StringBuilder responseStrBuilder = new StringBuilder();
+
+        // convert String to JSON object
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            Log.i(TAG, "endpoint content: " + inputStr);
+            responseStrBuilder.append(inputStr);
+        }
+
+        JSONObject json;
+        Object responseObject;
+        JSONArray interventionJsonArray;
+        JSONObject interventionObject;
+
+        // return JSON content
+        json = new JSONObject(responseStrBuilder.toString());
+
+        responseObject = json;
+        if (responseObject instanceof JSONArray) {
+            // It's an array
+            Log.i(TAG, "array found!");
+            return interventionJsonArray = (JSONArray)responseObject;
+        }
+        else if (responseObject instanceof JSONObject) {
+            // It's an object
+            Log.i(TAG, "object found!");
+            return interventionObject = (JSONObject)responseObject;
+        }
+        else {
+            // It's something else, like a string or number
+            Log.i(TAG, "value found!");
+            return responseObject;
+        }
+    }
+
+    /**
+     * Get endpoint to get JSON response from FAQs
+     * @return true or false on success
+>>>>>>> 7c58efc... deleted Parser, added serious modularity to BackendManager
      */
     public Object get(String _endpoint) throws IOException, JSONException {
         // build URL String
@@ -147,5 +209,35 @@ public class BackendManager {
         return (objToTest instanceof JSONObject);
     }
 
+    /**
+     * Get endpoint to get JSON response from FAQs
+     * @return true or false on success
+     */
+    public JSONObject connectGeneral() throws IOException, JSONException {
+        // build URL String
+        String urlString = ""
+                + NODE_ENDPOINT
+                + GENERAL_ENDPOINT;
 
+        // prepare URL for connection
+        url = new URL(urlString);
+
+        // open stream for reading input
+        InputStream inputStream = url.openStream();
+        InputStreamReader reader = new InputStreamReader(inputStream);
+
+        // buffer stream and read to String
+        BufferedReader streamReader = new BufferedReader(reader);
+        StringBuilder responseStrBuilder = new StringBuilder();
+
+        // convert String to JSON object
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            Log.i(TAG, "endpoint content: " + inputStr);
+            responseStrBuilder.append(inputStr);
+        }
+
+        // return JSON content
+        return new JSONObject(responseStrBuilder.toString());
+    }
 }
