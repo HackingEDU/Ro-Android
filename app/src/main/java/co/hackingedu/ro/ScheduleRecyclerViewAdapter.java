@@ -2,6 +2,9 @@ package co.hackingedu.ro;
 /**
  * Created by Spicycurryman on 9/14/15.
  */
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,15 +53,30 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
         return null;
     }
 
-    public static class ScheduleViewHolder extends RecyclerView.ViewHolder {
+    public static class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView schedule_event;
         public TextView time_location;
+        public CardView schedule_card_view;
+        private final Context context;
+
 
         public ScheduleViewHolder(View v) {
             super(v);
             schedule_event = (TextView) v.findViewById(R.id.schedule_event);
             time_location = (TextView) v.findViewById(R.id.time_location);
+            schedule_card_view = (CardView) v.findViewById(R.id.schedule_card_view);
+            context = v.getContext();
+
+            schedule_card_view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            final Intent intent;
+            intent =  new Intent(context, ScheduleDetailActivity.class);
+            context.startActivity(intent);
+
         }
     }
 

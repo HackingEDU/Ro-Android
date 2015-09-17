@@ -84,9 +84,6 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
             intent =  new Intent(context, MapViewImageActivity.class);
             context.startActivity(intent);
 
-
-
-
         }
     }
 
