@@ -20,7 +20,6 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

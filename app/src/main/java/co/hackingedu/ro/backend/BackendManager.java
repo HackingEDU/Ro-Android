@@ -6,6 +6,9 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import org.json.JSONArray;
+import android.os.StrictMode;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
