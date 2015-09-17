@@ -92,7 +92,7 @@ public class BackendManager {
             responseStrBuilder.append(inputStr);
         }
 
-        JSONObject json;
+        // TODO: error handling
         Object responseObject;
         JSONArray responseJsonArray;
         JSONObject responseJsonObject;
@@ -119,6 +119,7 @@ public class BackendManager {
     }
 
     /**
+     * TODO: CACHING
      * Void method to store JSON to phone storage as cache
      */
     public File getTempFile(Context context, String url) throws IOException {
@@ -128,7 +129,11 @@ public class BackendManager {
         return file;
     }
 
-
+    /**
+     * TODO: modular testing
+     * @param objToTest
+     * @return
+     */
     private boolean isArray(Object objToTest)
     {
         return (objToTest instanceof JSONArray);

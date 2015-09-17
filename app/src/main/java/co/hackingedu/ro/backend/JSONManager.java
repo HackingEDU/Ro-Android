@@ -7,8 +7,13 @@ import org.json.JSONObject;
 /**
  * Created by Joseph on 9/17/15.
  */
-public class JSONManager {
-    public JSONManager() {
+public class JsonManager {
+    /**
+     * Used as base index
+     */
+    private final int ZERO = 0;
+
+    public JsonManager() {
 
     }
 
@@ -26,5 +31,26 @@ public class JSONManager {
         JSONObject parsedObj = (JSONObject) arrayToParse.get(index);
         response = (String) parsedObj.get(query);
         return response;
+    }
+
+    /**
+     * Default getter method to get the first object from an array
+     * @param query
+     * @param arrayToParse
+     * @return
+     * @throws JSONException
+     */
+    public String get(String query, JSONArray arrayToParse) throws JSONException {
+        String response = "";
+        // get Object
+        JSONObject parsedObj = (JSONObject) arrayToParse.get(ZERO);
+        response = (String) parsedObj.get(query);
+        return response;
+    }
+
+    public int length(JSONArray arrayToLength){
+        int len = 0;
+        len = arrayToLength.length();
+        return len;
     }
 }

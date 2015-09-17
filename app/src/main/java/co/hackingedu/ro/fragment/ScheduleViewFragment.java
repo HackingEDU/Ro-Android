@@ -19,6 +19,7 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,12 +29,24 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
-import co.hackingedu.ro.backend.JSONManager;
+import co.hackingedu.ro.backend.JsonManager;
 
 /**
  * Fragment for displaying Schedule View
  */
 public class ScheduleViewFragment extends Fragment {
+
+    /**
+     * BackendManager to handle API Calls
+     * Utilize JsonManager to pull Strings out of returned Arrays
+     */
+    private BackendManager backendManager;
+
+    private JSONArray eventArray;
+
+    private final String NAME_QUERY = "name";
+    private final String TIME_QUERY = "time";
+    private final String LOCATION_QUERY = "location";
 
     /**
      *
@@ -50,11 +63,12 @@ public class ScheduleViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        BackendManager backendManager = new BackendManager();
+        backendManager = new BackendManager();
+
         try {
             Log.i("ScheduleViewFragment", "starting getting");
             Log.i("ScheduleViewFragment", "post getting: "
-                    + new JSONManager()
+                    + new JsonManager()
                     .get("name", 0, (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,6 +87,25 @@ public class ScheduleViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
+
+        try {
+            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < eventArray.length(); i++)
+        {
+            ScheduleInfo item = new ScheduleInfo();
+            try {
+                item.schedule_event = (String) ((JSONObject) eventArray.get(i)).get(NAME_QUERY);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            item.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
+            mContentItems.add(item);
+        }
 
         ScheduleInfo item1 = new ScheduleInfo();
         item1.schedule_event = "Badge Pickup";
