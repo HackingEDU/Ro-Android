@@ -28,6 +28,7 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.JSONManager;
 
 /**
  * Fragment for displaying Schedule View
