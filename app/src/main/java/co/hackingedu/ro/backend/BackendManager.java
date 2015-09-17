@@ -1,5 +1,7 @@
 package co.hackingedu.ro.backend;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -8,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -91,22 +94,22 @@ public class BackendManager {
 
         JSONObject json;
         Object responseObject;
-        JSONArray interventionJsonArray;
-        JSONObject interventionObject;
+        JSONArray responseJsonArray;
+        JSONObject responseJsonObject;
 
         // return JSON content
-        json = new JSONObject(responseStrBuilder.toString());
+        responseObject= new JSONArray(responseStrBuilder.toString());
 
-        responseObject = json;
+        //responseObject = json;
         if (responseObject instanceof JSONArray) {
             // It's an array
             Log.i(TAG, "array found!");
-            return interventionJsonArray = (JSONArray)responseObject;
+            return responseJsonArray = (JSONArray)responseObject;
         }
         else if (responseObject instanceof JSONObject) {
             // It's an object
             Log.i(TAG, "object found!");
-            return interventionObject = (JSONObject)responseObject;
+            return responseJsonObject = (JSONObject)responseObject;
         }
         else {
             // It's something else, like a string or number
@@ -116,66 +119,25 @@ public class BackendManager {
     }
 
     /**
-     * Get endpoint to get JSON response from FAQs
-     * @return true or false on success
+     * Void method to store JSON to phone storage as cache
      */
-    public JSONObject connectFaqs() throws IOException, JSONException {
-        // build URL String
-        String urlString = ""
-                + NODE_ENDPOINT
-                + FAQS_ENDPOINT;
-
-        // prepare URL for connection
-        url = new URL(urlString);
-
-        // open stream for reading input
-        InputStream inputStream = url.openStream();
-        InputStreamReader reader = new InputStreamReader(inputStream);
-
-        // buffer stream and read to String
-        BufferedReader streamReader = new BufferedReader(reader);
-        StringBuilder responseStrBuilder = new StringBuilder();
-
-        // convert String to JSON object
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-            Log.i(TAG, "endpoint content: " + inputStr);
-            responseStrBuilder.append(inputStr);
-        }
-
-        // return JSON content
-        return new JSONObject(responseStrBuilder.toString());
+    public File getTempFile(Context context, String url) throws IOException {
+        File file;
+        String fileName = Uri.parse(url).getLastPathSegment();
+        file = File.createTempFile(fileName, null, context.getCacheDir());
+        return file;
     }
 
-    /**
-     * Get endpoint to get JSON response from FAQs
-     * @return true or false on success
-     */
-    public JSONObject connectGeneral() throws IOException, JSONException {
-        // build URL String
-        String urlString = ""
-                + NODE_ENDPOINT
-                + GENERAL_ENDPOINT;
 
-        // prepare URL for connection
-        url = new URL(urlString);
-
-        // open stream for reading input
-        InputStream inputStream = url.openStream();
-        InputStreamReader reader = new InputStreamReader(inputStream);
-
-        // buffer stream and read to String
-        BufferedReader streamReader = new BufferedReader(reader);
-        StringBuilder responseStrBuilder = new StringBuilder();
-
-        // convert String to JSON object
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-            Log.i(TAG, "endpoint content: " + inputStr);
-            responseStrBuilder.append(inputStr);
-        }
-
-        // return JSON content
-        return new JSONObject(responseStrBuilder.toString());
+    private boolean isArray(Object objToTest)
+    {
+        return (objToTest instanceof JSONArray);
     }
+
+    private boolean isObject(Object objToTest)
+    {
+        return (objToTest instanceof JSONObject);
+    }
+
+
 }

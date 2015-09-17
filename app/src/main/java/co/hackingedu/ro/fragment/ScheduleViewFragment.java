@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.JSONManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -50,7 +52,10 @@ public class ScheduleViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BackendManager backendManager = new BackendManager();
         try {
-            backendManager.get(backendManager.EVENTS_ENDPOINT);
+            Log.i("ScheduleViewFragment", "starting getting");
+            Log.i("ScheduleViewFragment", "post getting: "
+                    + new JSONManager()
+                    .get("name", 0, (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT)));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
