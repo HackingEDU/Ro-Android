@@ -67,10 +67,10 @@ public class BackendManager {
 
     /**
      * General get function to take advantage of the specified Endpoints
-     * @param _endpoint
-     * @return
-     * @throws IOException
-     * @throws JSONException
+     * @param _endpoint final endpoint to call api
+     * @return Object to parse as JSONArray or JSONObject - needs more robustness on this end
+     * @throws IOException I/O Stream error getting input from API
+     * @throws JSONException JSON conversion error on Array vs Object
      */
     public Object get(String _endpoint) throws IOException, JSONException {
         // build URL String
@@ -102,7 +102,7 @@ public class BackendManager {
         JSONObject responseJsonObject;
 
         // return JSON content
-        responseObject= new JSONArray(responseStrBuilder.toString());
+        responseObject = new JSONArray(responseStrBuilder.toString());
 
         //responseObject = json;
         if (responseObject instanceof JSONArray) {
