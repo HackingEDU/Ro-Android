@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
+import co.hackingedu.ro.backend.BackendManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -43,6 +47,14 @@ public class ScheduleViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        BackendManager backendManager = new BackendManager();
+        try {
+            backendManager.connectFaqs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
