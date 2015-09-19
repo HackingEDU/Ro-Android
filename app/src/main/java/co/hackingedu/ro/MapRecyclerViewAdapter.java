@@ -96,6 +96,7 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
         MapInfo ci = mapInfoList.get(position);
         holder.map_num.setText(ci.map_text);
         //figure out how to set holder for map image
+        holder.map_image.setImageDrawable(ci.map_view);
 
         switch (getItemViewType(position)) {
             case TYPE_MAP:

@@ -22,7 +22,10 @@
         <activity
             android:name=".ScheduleDetailActivity"
             android:theme="@style/WithBar">
-
+        </activity>
+        <activity
+            android:name=".PrizeActivity"
+            android:theme="@style/WithBar">
         </activity>
     </application>
 

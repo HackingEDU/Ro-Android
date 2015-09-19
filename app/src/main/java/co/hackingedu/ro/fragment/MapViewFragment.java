@@ -62,6 +62,8 @@ public class MapViewFragment extends Fragment {
 
         MapInfo item3 = new MapInfo();
         item3.map_text = "Map 3";
+        // getDrawable is deprecated, find alternative later
+        item3.map_view = getResources().getDrawable(R.drawable.rohit);
         mContentItems.add(item3);
 
 
