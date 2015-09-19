@@ -94,10 +94,10 @@ public class ScheduleViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
-        
-        // try to update the FAQs Json File
+
+        // instantiate cache manager and try to update the Events JSON File
         try {
-            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE, inflater.getContext());
+            cacheManager = new CacheManager(cacheManager.EVENTS_FILE, inflater.getContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -105,8 +105,11 @@ public class ScheduleViewFragment extends Fragment {
         }
 
         // pull from local storage for quick loading
-        eventArray = (JSONArray) cacheManager.
-                getSharedPreferences(cacheManager.EVENTS_FILE, inflater.getContext());
+        try {
+            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, inflater.getContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }

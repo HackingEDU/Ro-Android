@@ -42,11 +42,14 @@ public class CacheManager {
     private SharedPreferences sharedPreferences;
 
     /**
-     * Default Constructor for complete manual manipulation of local storage
+     * Editor to Shared Preferences
      */
-    public CacheManager(){
-        backendManager = new BackendManager();
-    }
+    private SharedPreferences.Editor editor;
+
+    /**
+     * String to designate access to our local storage
+     */
+    private static final String PREF_NAME = "HackingEDU_Data";
 
     /**
      * Constructor Method to update everything
@@ -54,43 +57,45 @@ public class CacheManager {
      */
     public CacheManager(Context _context) throws IOException, JSONException {
         backendManager = new BackendManager();
-        updateAllJSONFiles(_context);
+        sharedPreferences = getSharedPreferences(_context);
+        editor = sharedPreferences.edit();
+        updateAllJSONFiles();
     }
 
     /**
      * Constructor Method with specified JSON File to update
-     * @param _JsonFile
-     * @param _context
-     * @throws IOException
-     * @throws JSONException
+     * @param _JsonFile specified JSON File to update
+     * @param _context Android Activity context
+     * @throws IOException thrown when issues with backendManager are faced
+     * @throws JSONException thrown when JSON conversion issues are faced
      */
     public CacheManager(String _JsonFile, Context _context) throws IOException, JSONException {
         backendManager = new BackendManager();
-        updateJsonFile(_JsonFile, _context);
+        sharedPreferences = getSharedPreferences(_context);
+        editor = sharedPreferences.edit();
+        updateJsonFile(_JsonFile);
     }
 
     /**
      * Public void to poll server for updates on all JSON Files
      */
-    public void updateAllJSONFiles(Context _context) throws IOException, JSONException {
-        updateJsonFile(FAQS_FILE, _context);
-        updateJsonFile(GENERAL_FILE, _context);
-        updateJsonFile(EVENTS_FILE, _context);
-        updateJsonFile(NOTIFS_FILE, _context);
-        updateJsonFile(MAPS_FILE, _context);
+    public void updateAllJSONFiles() throws IOException, JSONException {
+        updateJsonFile(FAQS_FILE);
+        updateJsonFile(GENERAL_FILE);
+        updateJsonFile(EVENTS_FILE);
+        updateJsonFile(NOTIFS_FILE);
+        updateJsonFile(MAPS_FILE);
     }
 
     /**
      * Public void to poll server for updates on specified JSON File
      * @param JsonFile name of file to update
      */
-    public void updateJsonFile(String JsonFile, Context _context) throws IOException, JSONException {
+    public void updateJsonFile(String JsonFile) throws IOException, JSONException {
         // utilize the backend manager to call the API
         String JsonToString = ((JSONArray) backendManager.get(JsonFile)).toString();
 
         // locally save the JSON String as a preference accessible by the context
-        sharedPreferences = getSharedPreferences(JsonFile, _context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(JsonFile, JsonToString);
 
         // Commit the edits!
@@ -99,13 +104,56 @@ public class CacheManager {
 
     /**
      * Static getter for shared Preferences
-     * @param prefName JSON File Name
      * @param context TODO: Something I need to look more into on why context is necessary
      * @return stored information
      */
-    public SharedPreferences getSharedPreferences(String prefName, Context context) {
-        Log.i(TAG, "local file retrieved: " +
-                context.getSharedPreferences(prefName, Context.MODE_PRIVATE));
-        return context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Public Getter method to retrieve local storage as String
+     * @param JsonFile specified JSON file to retrieve
+     * @param _context provided context from Android Activity
+     * @return locally stored file contents as String
+     */
+    public String getJsonString(String JsonFile, Context _context){
+        String str = getSharedPreferences(_context).getString(JsonFile, null);
+        Log.i(TAG, str);
+        return str;
+    }
+
+    /**
+     * Public getter method to retrieve local storage as JSONArray
+     * @param JsonFile specified JSON file to retrieve
+     * @param _context provided context from Android Activity
+     * @return locally stored file contents as JSONArray
+     * @throws JSONException whenever there is an issue with String-JSON conversion
+     */
+    public JSONArray getJsonArray(String JsonFile, Context _context) throws JSONException {
+        return new JSONArray(getJsonString(JsonFile, _context));
+    }
+
+    /**
+     * Public Deleter method to delete a single JSON File
+     * @param JsonFile specified JSON File to delete
+     */
+    public void removeJsonFile(String JsonFile){
+        // delete key, and thus the data as well
+        editor.remove(JsonFile);
+
+        // Commit the edits!
+        editor.commit();
+    }
+
+    /**
+     * Public deleter method to delete all preference data
+     */
+    public void clearAll(){
+        // delete key, and thus the data as well
+        editor.clear();
+
+        // Commit the edits!
+        editor.commit();
     }
 }

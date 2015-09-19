@@ -70,12 +70,9 @@ public class FaqViewFragment extends Fragment {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
 
-        // instantiate cache manager
-        cacheManager = new CacheManager();
-
-        // try to update the FAQs Json File
+        // instantiate cache manager and try to update the FAQs JSON File
         try {
-            cacheManager.updateJsonFile(cacheManager.FAQS_FILE, inflater.getContext());
+            cacheManager = new CacheManager(cacheManager.FAQS_FILE, inflater.getContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -83,8 +80,11 @@ public class FaqViewFragment extends Fragment {
         }
 
         // pull from local storage for quick loading
-        faqsArray = (JSONArray) cacheManager.
-                getSharedPreferences(cacheManager.FAQS_FILE, inflater.getContext());
+        try {
+            faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, inflater.getContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 

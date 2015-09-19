@@ -71,12 +71,9 @@ public class MapViewFragment extends Fragment {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
 
-        // instantiate cache manager
-        cacheManager = new CacheManager();
-
-        // try to update the FAQs Json File
+        // instantiate cache manager and try to update the Maps JSON File
         try {
-            cacheManager.updateJsonFile(cacheManager.MAPS_FILE, inflater.getContext());
+            cacheManager = new CacheManager(cacheManager.MAPS_FILE, inflater.getContext());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -84,9 +81,11 @@ public class MapViewFragment extends Fragment {
         }
 
         // pull from local storage for quick loading
-        mapsArray = (JSONArray) cacheManager.
-                getSharedPreferences(cacheManager.MAPS_FILE, inflater.getContext());
-
+        try {
+            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, inflater.getContext());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
