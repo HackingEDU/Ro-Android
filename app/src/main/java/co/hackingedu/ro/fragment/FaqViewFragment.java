@@ -26,9 +26,9 @@ import java.util.List;
 
 import co.hackingedu.ro.FaqRecyclerViewAdapter;
 import co.hackingedu.ro.Info.FaqInfo;
-import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.CacheManager;
 
 
 public class FaqViewFragment extends Fragment {
@@ -42,6 +42,8 @@ public class FaqViewFragment extends Fragment {
      * JSONArray field to store response from backendManager
      */
     private JSONArray faqsArray;
+
+    private CacheManager cacheManager;
 
     /**
      * final string for querying question
@@ -67,6 +69,22 @@ public class FaqViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
+
+        // instantiate cache manager
+        cacheManager = new CacheManager();
+
+        // try to update the FAQs Json File
+        try {
+            cacheManager.updateJsonFile(cacheManager.FAQS_FILE, inflater.getContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // pull from local storage for quick loading
+        faqsArray = (JSONArray) cacheManager.
+                getSharedPreferences(cacheManager.FAQS_FILE, inflater.getContext());
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -81,13 +99,13 @@ public class FaqViewFragment extends Fragment {
         mAdapter = new RecyclerViewMaterialAdapter(new FaqRecyclerViewAdapter(mContentItems));
 
         // save local copy of JSON arrays from backend Manager
-        try {
-            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 
         // loop through each faq in JSON Array and do frontend stuff!

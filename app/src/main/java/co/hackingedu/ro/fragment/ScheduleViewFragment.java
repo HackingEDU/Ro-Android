@@ -29,6 +29,7 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.CacheManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -39,6 +40,8 @@ public class ScheduleViewFragment extends Fragment {
      * BackendManager to handle API Calls
      */
     private BackendManager backendManager;
+
+    private CacheManager cacheManager;
 
     /**
      * JSONArray field to store response from backendManager
@@ -91,6 +94,20 @@ public class ScheduleViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
         backendManager = new BackendManager();
+        
+        // try to update the FAQs Json File
+        try {
+            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE, inflater.getContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // pull from local storage for quick loading
+        eventArray = (JSONArray) cacheManager.
+                getSharedPreferences(cacheManager.EVENTS_FILE, inflater.getContext());
+
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -105,13 +122,13 @@ public class ScheduleViewFragment extends Fragment {
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
 
         // save local copy of JSON arrays from backend Manager
-        try {
-            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         // loop through each event in JSON Array and do frontend stuff!
         for (int i = 0; i < eventArray.length(); i++)
