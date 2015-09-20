@@ -51,7 +51,6 @@ public class MapViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new MapRecyclerViewAdapter(mContentItems));
 
-
         MapInfo item1 = new MapInfo();
         item1.map_text = "Map 1";
         mContentItems.add(item1);
@@ -66,11 +65,9 @@ public class MapViewFragment extends Fragment {
         item3.map_view = getResources().getDrawable(R.drawable.rohit);
         mContentItems.add(item3);
 
-
         mAdapter.notifyDataSetChanged();
 
         mRecyclerView.setAdapter(mAdapter);
-
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }

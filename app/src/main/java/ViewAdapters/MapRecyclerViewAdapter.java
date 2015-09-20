@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Info.MapInfo;
-import co.hackingedu.ro.Activity.MapViewImageActivity;
+import co.hackingedu.ro.Activity.MapDetailActivity;
 import co.hackingedu.ro.R;
 
 public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerViewAdapter.MapViewHolder> {
@@ -83,7 +83,7 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
         @Override
         public void onClick(View v) {
             final Intent intent;
-            intent =  new Intent(context, MapViewImageActivity.class);
+            intent =  new Intent(context, MapDetailActivity.class);
             context.startActivity(intent);
 
         }

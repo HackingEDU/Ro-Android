@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import co.hackingedu.ro.R;
+import co.hackingedu.ro.fragment.ScheduleDetailFragment;
 
 public class ScheduleDetailActivity extends Activity {
 
@@ -14,10 +15,22 @@ public class ScheduleDetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule_detail);
+        setContentView(R.layout.activity_schedule_detail);
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (savedInstanceState == null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+            Bundle arguments = new Bundle();
+            arguments.putParcelable("course", getIntent().getParcelableExtra("course"));
+            ScheduleDetailFragment fragment = new ScheduleDetailFragment();
+            fragment.setArguments(arguments);
+            getFragmentManager().beginTransaction()
+                    .add(R.id.schedule_detail_container, fragment)
+                    .commit();
+        }
 
     }
 

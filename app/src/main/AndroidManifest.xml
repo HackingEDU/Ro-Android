@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MapViewImageActivity"
+            android:name=".Activity.MapDetailActivity"
             android:theme="@style/WithBar">
         </activity>
         <activity
