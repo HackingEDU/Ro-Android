@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/map_card_view"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:cardCornerRadius="2dp"
@@ -15,33 +15,44 @@
         android:layout_marginRight="@dimen/cardMarginHorizontal"
         android:layout_marginTop="@dimen/cardMarginVertical"
         app:cardPreventCornerOverlap="false"
-        app:contentPadding="0dp"
-        android:layout_gravity="right|center_vertical">
+        app:contentPadding="0dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/map"
-            android:src="@drawable/prize"
+            android:id="@+id/sponsor_image"
+            android:src="@drawable/api"
+            android:adjustViewBounds="true"
+            android:maxWidth="35dp"
+            android:maxHeight="35dp"
+            android:scaleType="fitCenter"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"
-            android:scaleType="fitCenter" />
+            />
 
         <co.hackingedu.ro.style.LatoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Map 1"
+            android:text="Sponsor Name"
             android:textColor="#000000"
-            android:id="@+id/map_num"
+            android:id="@+id/sponsor_name"
             android:layout_gravity="center"
             android:textSize="25sp"
+            android:layout_marginBottom="25dp"
             android:layout_centerVertical="true"
             android:layout_alignRight="@+id/card_view"
             android:layout_alignEnd="@+id/card_view" />
 
+        <co.hackingedu.ro.style.LatoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sponsor Link"
+            android:id="@+id/sponsor_link"
+            android:textColor="#8D8888"
+            android:layout_alignTop="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp" />
+
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</FrameLayout>

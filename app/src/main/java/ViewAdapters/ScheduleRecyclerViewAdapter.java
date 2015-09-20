@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package ViewAdapters;
 /**
  * Created by Spicycurryman on 9/14/15.
  */
@@ -14,6 +14,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Info.ScheduleInfo;
+import co.hackingedu.ro.R;
+import co.hackingedu.ro.Activity.ScheduleDetailActivity;
 
 public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder> {
 

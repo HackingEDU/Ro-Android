@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.hackingedu.ro.Info.MapInfo;
-import co.hackingedu.ro.MapRecyclerViewAdapter;
+import ViewAdapters.MapRecyclerViewAdapter;
 import co.hackingedu.ro.R;
 
 

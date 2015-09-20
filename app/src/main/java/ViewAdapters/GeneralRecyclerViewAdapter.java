@@ -1,6 +1,9 @@
-package co.hackingedu.ro;
+package ViewAdapters;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import co.hackingedu.ro.Activity.SponsorActivity;
 import co.hackingedu.ro.Info.GeneralInfo;
+import co.hackingedu.ro.Activity.PrizeActivity;
+import co.hackingedu.ro.R;
 
 
 public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecyclerViewAdapter.GeneralViewHolder> {
@@ -76,7 +82,7 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
 
             case TYPE_API: {
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.api_card, parent, false);
+                        .inflate(R.layout.sponsor, parent, false);
                 return new GeneralViewHolder(view) {
                 };
             }
@@ -84,14 +90,32 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
         return null;
     }
 
-    public static class GeneralViewHolder extends RecyclerView.ViewHolder {
+    public static class GeneralViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mText;
+        public CardView prize_card_recycle;
+        private final Context context;
 
         public GeneralViewHolder(View v) {
             super(v);
             mText = (TextView) v.findViewById(R.id.wifi_name);
+            prize_card_recycle = (CardView) v.findViewById(R.id.card_view);
+            context = v.getContext();
+            prize_card_recycle.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            if(getAdapterPosition()==3) {
+                final Intent intent;
+                intent = new Intent(context, PrizeActivity.class);
+                context.startActivity(intent);
+            }
+            else if(getAdapterPosition()==4) {
+                final Intent intent;
+                intent = new Intent(context, SponsorActivity.class);
+                context.startActivity(intent);
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.Activity;
 
 /**
  * Created by Spicycurryman on 9/18/15.
@@ -17,12 +17,14 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import java.util.ArrayList;
 import java.util.List;
 
-import co.hackingedu.ro.Info.PrizeInfo;
+import ViewAdapters.SponsorRecyclerViewAdapter;
+import co.hackingedu.ro.Info.SponsorInfo;
+import co.hackingedu.ro.R;
 
 
-public class PrizeActivity extends Activity {
+public class SponsorActivity extends Activity {
 
-    private List<PrizeInfo> mContentItems = new ArrayList<PrizeInfo>();
+    private List<SponsorInfo> mContentItems = new ArrayList<SponsorInfo>();
     private RecyclerView mRecyclerView;
     private RecyclerViewMaterialAdapter mAdapter;
 
@@ -38,28 +40,26 @@ public class PrizeActivity extends Activity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new PrizeRecyclerViewAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new SponsorRecyclerViewAdapter(mContentItems));
 
-
-
-        PrizeInfo item1 = new PrizeInfo();
-        item1.prize_name = "Macbook air";
-        item1.prize_description = "200 GB";
+        SponsorInfo item1 = new SponsorInfo();
+        item1.sponsor_name = "Twilio";
+        item1.sponsor_url = "http://www.Twilio.com";
         mContentItems.add(item1);
 
-        PrizeInfo item2 = new PrizeInfo();
-        item2.prize_name = "Macbook air";
-        item2.prize_description = "200 GB";
+        SponsorInfo item2 = new SponsorInfo();
+        item2.sponsor_name = "Makeschool";
+        item2.sponsor_url = "http://www.Makeschool.com";
         mContentItems.add(item2);
 
-        PrizeInfo item3 = new PrizeInfo();
-        item3.prize_name = "Macbook air";
-        item3.prize_description = "200 GB";
+        SponsorInfo item3 = new SponsorInfo();
+        item3.sponsor_name = "IBM";
+        item3.sponsor_url = "http://www.IBM.com";
         mContentItems.add(item3);
 
-        PrizeInfo item4 = new PrizeInfo();
-        item4.prize_name = "Macbook air";
-        item4.prize_description = "200 GB";
+        SponsorInfo item4 = new SponsorInfo();
+        item4.sponsor_name = "Google";
+        item4.sponsor_url = "http://www.google.com";
         mContentItems.add(item4);
 
         mAdapter.notifyDataSetChanged();

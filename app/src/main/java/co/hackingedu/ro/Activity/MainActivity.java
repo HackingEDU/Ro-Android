@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import co.hackingedu.ro.R;
 import co.hackingedu.ro.fragment.FaqViewFragment;
 import co.hackingedu.ro.fragment.MapViewFragment;
 import co.hackingedu.ro.fragment.RecyclerViewFragment;

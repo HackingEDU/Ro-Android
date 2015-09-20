@@ -18,7 +18,7 @@
         app:cardPreventCornerOverlap="false"
         app:contentPadding="0dp">
 
-        <co.hackingedu.ro.LatoTextView
+        <co.hackingedu.ro.style.LatoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -30,7 +30,7 @@
 
 
 
-        <co.hackingedu.ro.LatoTextView
+        <co.hackingedu.ro.style.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"

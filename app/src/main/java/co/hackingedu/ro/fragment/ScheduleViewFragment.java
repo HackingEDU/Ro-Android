@@ -21,7 +21,7 @@ import java.util.List;
 
 import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
-import co.hackingedu.ro.ScheduleRecyclerViewAdapter;
+import ViewAdapters.ScheduleRecyclerViewAdapter;
 
 
 public class ScheduleViewFragment extends Fragment {

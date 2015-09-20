@@ -29,7 +29,7 @@
             android:maxHeight="50dp"
             android:scaleType="fitCenter" />
 
-        <co.hackingedu.ro.LatoTextView
+        <co.hackingedu.ro.style.LatoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Prize Name"
@@ -42,7 +42,7 @@
             android:layout_alignRight="@+id/prize_card_recycle"
             android:layout_alignEnd="@+id/prize_card_recycle" />
 
-        <co.hackingedu.ro.LatoTextView
+        <co.hackingedu.ro.style.LatoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Prize Description"

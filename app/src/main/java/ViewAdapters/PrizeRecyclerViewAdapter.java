@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package ViewAdapters;
 
 /**
  * Created by Spicycurryman on 9/14/15.
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Info.PrizeInfo;
+import co.hackingedu.ro.R;
 
 public class PrizeRecyclerViewAdapter extends RecyclerView.Adapter<PrizeRecyclerViewAdapter.PrizeViewHolder> {
 
@@ -58,7 +59,7 @@ public class PrizeRecyclerViewAdapter extends RecyclerView.Adapter<PrizeRecycler
         return null;
     }
 
-    public static class PrizeViewHolder extends RecyclerView.ViewHolder  {
+    public static class PrizeViewHolder extends RecyclerView.ViewHolder   {
 
         public ImageView sponsor_image;
         public CardView prize_card_recycle;
@@ -73,8 +74,9 @@ public class PrizeRecyclerViewAdapter extends RecyclerView.Adapter<PrizeRecycler
             sponsor_image = (ImageView) v.findViewById(R.id.sponsor_image);
             prize_name = (TextView) v.findViewById(R.id.prize_name);
             prize_desc = (TextView) v.findViewById(R.id.prize_desc);
-            //prize_card_recycle = (CardView) v.findViewById(R.id.prize_card_recycle);
+            prize_card_recycle = (CardView) v.findViewById(R.id.prize_card_recycle);
             context = v.getContext();
+
 
         }
 

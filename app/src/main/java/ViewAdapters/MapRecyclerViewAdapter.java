@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package ViewAdapters;
 
 /**
  * Created by Spicycurryman on 9/14/15.
@@ -17,6 +17,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Info.MapInfo;
+import co.hackingedu.ro.Activity.MapViewImageActivity;
+import co.hackingedu.ro.R;
 
 public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerViewAdapter.MapViewHolder> {
 

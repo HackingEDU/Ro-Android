@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,15 +16,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapViewImageActivity"
+            android:name=".Activity.MapViewImageActivity"
             android:theme="@style/WithBar">
         </activity>
         <activity
-            android:name=".ScheduleDetailActivity"
+            android:name=".Activity.ScheduleDetailActivity"
             android:theme="@style/WithBar">
         </activity>
         <activity
-            android:name=".PrizeActivity"
+            android:name=".Activity.PrizeActivity"
+            android:theme="@style/WithBar">
+        </activity>
+        <activity
+            android:name=".Activity.SponsorActivity"
             android:theme="@style/WithBar">
         </activity>
     </application>

@@ -1,9 +1,11 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import co.hackingedu.ro.R;
 
 public class ScheduleDetailActivity extends Activity {
 

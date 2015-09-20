@@ -19,7 +19,7 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import java.util.ArrayList;
 import java.util.List;
 
-import co.hackingedu.ro.FaqRecyclerViewAdapter;
+import ViewAdapters.FaqRecyclerViewAdapter;
 import co.hackingedu.ro.Info.FaqInfo;
 import co.hackingedu.ro.R;
 

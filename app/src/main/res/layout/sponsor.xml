@@ -32,15 +32,15 @@
 
 
 
-        <co.hackingedu.ro.LatoTextView
-        android:layout_width="192dp"
+        <co.hackingedu.ro.style.LatoTextView
+        android:layout_width="212dp"
         android:layout_height="wrap_content"
-        android:text="Sponsored API&apos;s: Twilio, Pebble, Edmodo, Firebase and many more! "
+        android:text="Click for Sponsors!"
         android:textColor="#000000"
         android:id="@+id/api_list"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        />
+        android:layout_marginLeft="35dp"
+            android:textSize="20sp" />
 
     </android.support.v7.widget.CardView>
 
