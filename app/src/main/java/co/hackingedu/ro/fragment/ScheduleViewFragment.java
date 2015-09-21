@@ -19,9 +19,9 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import java.util.ArrayList;
 import java.util.List;
 
+import ViewAdapters.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
-import ViewAdapters.ScheduleRecyclerViewAdapter;
 
 
 public class ScheduleViewFragment extends Fragment {
@@ -70,6 +70,7 @@ public class ScheduleViewFragment extends Fragment {
         item4.schedule_event = "Building non-responsive sites";
         item4.time_location = "1:00 p.m. - 1:45 p.m. | Vivek’s World";
         mContentItems.add(item4);
+
 
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);

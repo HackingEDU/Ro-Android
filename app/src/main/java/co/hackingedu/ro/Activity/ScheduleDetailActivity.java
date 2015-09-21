@@ -23,10 +23,7 @@ public class ScheduleDetailActivity extends Activity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putParcelable("course", getIntent().getParcelableExtra("course"));
             ScheduleDetailFragment fragment = new ScheduleDetailFragment();
-            fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .add(R.id.schedule_detail_container, fragment)
                     .commit();
