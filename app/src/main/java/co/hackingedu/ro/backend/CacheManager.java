@@ -146,7 +146,7 @@ public class CacheManager {
      */
     public String getJsonString(String JsonFile, Context _context){
         String str = getSharedPreferences(_context).getString(JsonFile, null);
-        Log.i(TAG, str);
+        Log.i(TAG, "JSONString: " + str);
         return str;
     }
 

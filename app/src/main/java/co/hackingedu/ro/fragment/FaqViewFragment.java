@@ -84,10 +84,13 @@ public class FaqViewFragment extends Fragment {
         // pull from local storage for quick loading
         try {
             if(!cacheManager.checkFile(cacheManager.FAQS_FILE)){
+                updateLater = false;
                 cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
             } else {
                 // we need to update later!!!!
                 updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
             }
             faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
         } catch (JSONException e) {
