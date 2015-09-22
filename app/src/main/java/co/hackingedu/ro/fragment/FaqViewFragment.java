@@ -4,7 +4,6 @@ package co.hackingedu.ro.fragment;
  * Created by Spicycurryman on 9/14/15.
  */
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -83,7 +82,7 @@ public class FaqViewFragment extends Fragment {
 
         // pull from local storage for quick loading
         try {
-            if(!cacheManager.checkFile(cacheManager.FAQS_FILE)){
+            if(cacheManager.fileIsNull(cacheManager.FAQS_FILE)){
                 updateLater = false;
                 cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
                 Log.i(TAG, "updateLater status: " + updateLater);

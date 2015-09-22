@@ -90,6 +90,7 @@ public class ScheduleViewFragment extends Fragment {
     public static final int ITEM_COUNT = 4; // not really necessary because JSONArray has length()
 
     public List<ScheduleInfo> mContentItems = new ArrayList<ScheduleInfo>();
+    private boolean updateLater;
 
     public static ScheduleViewFragment newInstance() {
         return new ScheduleViewFragment();
@@ -106,9 +107,15 @@ public class ScheduleViewFragment extends Fragment {
 
         // pull from local storage for quick loading
         try {
-            // we should be checking on when to update this!!!!
-            // TODO: implement some checking
-            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
+                updateLater = false;
+                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
+            }
             eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, context);
         } catch (JSONException e) {
             Log.i(TAG, "JSON Exception: onCreateView 2");

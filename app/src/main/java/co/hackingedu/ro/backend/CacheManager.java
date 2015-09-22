@@ -134,8 +134,8 @@ public class CacheManager {
      * @param JsonFile File to check
      * @return whether getString succeeds
      */
-    public boolean checkFile(String JsonFile){
-        return (sharedPreferences.getString(JsonFile, null) != null);
+    public boolean fileIsNull(String JsonFile){
+        return (sharedPreferences.getString(JsonFile, null) == null);
     }
 
     /**

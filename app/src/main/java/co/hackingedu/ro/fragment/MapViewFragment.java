@@ -70,6 +70,7 @@ public class MapViewFragment extends Fragment {
     public static final int ITEM_COUNT = 3;
 
     public List<MapInfo> mContentItems = new ArrayList<MapInfo>();
+    private boolean updateLater;
 
     public static MapViewFragment newInstance() {
         return new MapViewFragment();
@@ -86,9 +87,15 @@ public class MapViewFragment extends Fragment {
 
         // pull from local storage for quick loading
         try {
-            // we should be checking on when to update this!!!!
-            // TODO: implement some checking
-            cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+            if(cacheManager.fileIsNull(cacheManager.MAPS_FILE)){
+                updateLater = false;
+                cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
+            }
             mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
         } catch (JSONException e) {
             Log.i(TAG, "JSON Exception: onCreateView 2");
