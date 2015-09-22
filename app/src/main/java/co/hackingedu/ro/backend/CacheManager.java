@@ -130,6 +130,15 @@ public class CacheManager {
     }
 
     /**
+     * Public status checker method for the existence of a JsonFile
+     * @param JsonFile File to check
+     * @return whether getString succeeds
+     */
+    public boolean checkFile(String JsonFile){
+        return (sharedPreferences.getString(JsonFile, null) != null);
+    }
+
+    /**
      * Public Getter method to retrieve local storage as String
      * @param JsonFile specified JSON file to retrieve
      * @param _context provided context from Android Activity
@@ -151,6 +160,7 @@ public class CacheManager {
     public JSONArray getJsonArray(String JsonFile, Context _context) throws JSONException {
         if(getJsonString(JsonFile, _context) == null){
             // handle this issue!
+            return null;
         }
         return new JSONArray(getJsonString(JsonFile, _context));
     }

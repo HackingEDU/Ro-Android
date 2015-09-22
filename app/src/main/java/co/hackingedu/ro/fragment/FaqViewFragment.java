@@ -60,6 +60,8 @@ public class FaqViewFragment extends Fragment {
      */
     private final String ANSWER_QUERY = "a";
 
+    private boolean updateLater;
+
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
     public static final int ITEM_COUNT = 4;
@@ -81,7 +83,12 @@ public class FaqViewFragment extends Fragment {
 
         // pull from local storage for quick loading
         try {
-            cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+            if(!cacheManager.checkFile(cacheManager.FAQS_FILE)){
+                cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+            }
             faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
         } catch (JSONException e) {
             Log.i(TAG, "JSON Exception: onCreateView 2");
@@ -166,11 +173,13 @@ public class FaqViewFragment extends Fragment {
 
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+
+        /****************************************************************
+         *
+         *
+         * REMEMBER TO UPDATE THE INFO AFTER THIS!!!!!!!!!!!!!!!!!!!!!
+         *
+         *
+         ****************************************************************/
     }
-
-
-
-
-
-
 }
