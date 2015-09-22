@@ -4,11 +4,15 @@ package co.hackingedu.ro.fragment;
  * Created by Spicycurryman on 9/14/15.
  */
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,11 @@ import co.hackingedu.ro.backend.CacheManager;
 
 
 public class MapViewFragment extends Fragment {
+
+    /**
+     * Tag for Log
+     */
+    private final String TAG = "MapViewFragment";
 
     /**
      * BackendManager to handle API Calls
@@ -67,25 +76,51 @@ public class MapViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // instantiate backendManager to begin api calls!
-        backendManager = new BackendManager();
+    public void onAttach(Context context){
+        super.onAttach(context);
 
-        // instantiate cache manager and try to update the Maps JSON File
-        try {
-            cacheManager = new CacheManager(cacheManager.MAPS_FILE, inflater.getContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
+        cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
+        Log.i(TAG, "cacheManager success");
 
         // pull from local storage for quick loading
         try {
-            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, inflater.getContext());
+            // we should be checking on when to update this!!!!
+            // TODO: implement some checking
+            cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
         } catch (JSONException e) {
+            Log.i(TAG, "JSON Exception: onCreateView 2");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // instantiate backendManager to begin api calls!
+//        backendManager = new BackendManager();
+
+        // instantiate cache manager and try to update the Maps JSON File
+//        cacheManager = new CacheManager(inflater.getContext().getSharedPreferences("HackingEDU_Data", Context.MODE_PRIVATE));
+//        try {
+//            cacheManager = new CacheManager(cacheManager.MAPS_FILE, inflater.getContext());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        // pull from local storage for quick loading
+//        try {
+//            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, inflater.getContext());
+//            Log.i(TAG, "mapsArray success");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -101,7 +136,7 @@ public class MapViewFragment extends Fragment {
 
         // save local copy of JSON arrays from backend Manager
 //        try {
-//            mapsArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
+//            mapsArray = (JSONArray) backendManager.get(backendManager.MAPS_ENDPOINT);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        } catch (JSONException e) {
@@ -138,13 +173,6 @@ public class MapViewFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
 
-
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
-
-
-
-
-
-
 }

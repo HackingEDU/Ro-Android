@@ -2,6 +2,7 @@ package co.hackingedu.ro.backend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -52,11 +53,23 @@ public class CacheManager {
     private static final String PREF_NAME = "HackingEDU_Data";
 
     /**
+     *
+     * @param _sharedPreferences
+     */
+    public CacheManager(SharedPreferences _sharedPreferences){
+        backendManager = new BackendManager();
+        sharedPreferences = _sharedPreferences;
+        editor = sharedPreferences.edit();
+    }
+
+    /**
      * Constructor Method to update everything
      * Updates all local JSON files
      */
     public CacheManager(Context _context) throws IOException, JSONException {
+        Log.i(TAG, "instantiating BackendManager");
         backendManager = new BackendManager();
+        Log.i(TAG, "instantiating sharedPreferences");
         sharedPreferences = getSharedPreferences(_context);
         editor = sharedPreferences.edit();
         updateAllJSONFiles();
@@ -70,9 +83,12 @@ public class CacheManager {
      * @throws JSONException thrown when JSON conversion issues are faced
      */
     public CacheManager(String _JsonFile, Context _context) throws IOException, JSONException {
+        Log.i(TAG, "instantiating BackendManager");
         backendManager = new BackendManager();
+        Log.i(TAG, "instantiating sharedPreferences");
         sharedPreferences = getSharedPreferences(_context);
         editor = sharedPreferences.edit();
+        Log.i(TAG, "updating file");
         updateJsonFile(_JsonFile);
     }
 
@@ -93,8 +109,9 @@ public class CacheManager {
      */
     public void updateJsonFile(String JsonFile) throws IOException, JSONException {
         // utilize the backend manager to call the API
-        String JsonToString = ((JSONArray) backendManager.get(JsonFile)).toString();
-
+        Log.i(TAG, "File to update: " + JsonFile);
+        String JsonToString = (backendManager.get(JsonFile)).toString();
+        Log.i(TAG, "JsonToString: " + JsonToString);
         // locally save the JSON String as a preference accessible by the context
         editor.putString(JsonFile, JsonToString);
 
@@ -108,7 +125,8 @@ public class CacheManager {
      * @return stored information
      */
     private static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        //return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -131,6 +149,9 @@ public class CacheManager {
      * @throws JSONException whenever there is an issue with String-JSON conversion
      */
     public JSONArray getJsonArray(String JsonFile, Context _context) throws JSONException {
+        if(getJsonString(JsonFile, _context) == null){
+            // handle this issue!
+        }
         return new JSONArray(getJsonString(JsonFile, _context));
     }
 

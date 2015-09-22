@@ -4,7 +4,9 @@ package co.hackingedu.ro.fragment;
  * Created by Spicycurryman on 9/14/15.
  */
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +37,11 @@ import co.hackingedu.ro.backend.CacheManager;
  * Fragment for displaying Schedule View
  */
 public class ScheduleViewFragment extends Fragment {
+
+    /**
+     * Tag for Log
+     */
+    private final String TAG = "ScheduleViewFragment";
 
     /**
      * BackendManager to handle API Calls
@@ -89,27 +96,51 @@ public class ScheduleViewFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
+        cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
+        Log.i(TAG, "cacheManager success");
+
+        // pull from local storage for quick loading
+        try {
+            // we should be checking on when to update this!!!!
+            // TODO: implement some checking
+            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, context);
+        } catch (JSONException e) {
+            Log.i(TAG, "JSON Exception: onCreateView 2");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG, "IO Exception: onCreateView 2");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
-        backendManager = new BackendManager();
+//        backendManager = new BackendManager();
 
         // instantiate cache manager and try to update the Events JSON File
-        try {
-            cacheManager = new CacheManager(cacheManager.EVENTS_FILE, inflater.getContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // pull from local storage for quick loading
-        try {
-            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, inflater.getContext());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            cacheManager = new CacheManager(cacheManager.EVENTS_FILE, inflater.getContext());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // pull from local storage for quick loading
+//        try {
+//            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, inflater.getContext());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
