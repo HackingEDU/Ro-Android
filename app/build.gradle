@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -27,4 +28,5 @@ dependencies {
         transitive = true
     }
     compile project(':json-simple-1.1')
+    compile "com.google.android.gms:play-services-gcm:7.8.0"
 }

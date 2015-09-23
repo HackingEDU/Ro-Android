@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.hackingedu.ro" >
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name= "co.hackingedu.ro.permission.C2D_MESSAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
