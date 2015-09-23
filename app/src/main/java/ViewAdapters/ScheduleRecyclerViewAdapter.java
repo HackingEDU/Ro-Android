@@ -23,6 +23,7 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
     List<ScheduleInfo> scheduleInfoList;
     static final int TYPE_SCHEDULE = 0;
 
+
     public ScheduleRecyclerViewAdapter(List<ScheduleInfo> scheduleInfoList) {
         this.scheduleInfoList = scheduleInfoList;
     }
@@ -77,7 +78,6 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
 
         @Override
         public void onClick(View v) {
-            final Intent intent;
             //you can use get adapter position to get the position of the recycler item
 
 
@@ -85,8 +85,7 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             Intent i = new Intent(context, ScheduleDetailActivity.class);
             i.putExtra("lol", getAdapterPosition());
 
-            intent =  new Intent(context, ScheduleDetailActivity.class);
-            context.startActivity(intent);
+            context.startActivity(i);
 
         }
     }

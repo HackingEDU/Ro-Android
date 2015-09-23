@@ -37,6 +37,8 @@ public class ScheduleDetailActivity extends Activity {
 
 
 
+
+
     }
 
     @Override
