@@ -80,7 +80,11 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             final Intent intent;
             //you can use get adapter position to get the position of the recycler item
 
-            //figure out how to pass getAdapterPosition to ScheduleDetailFragment
+
+            //put Extra to save Data
+            Intent i = new Intent(context, ScheduleDetailActivity.class);
+            i.putExtra("lol", getAdapterPosition());
+
             intent =  new Intent(context, ScheduleDetailActivity.class);
             context.startActivity(intent);
 

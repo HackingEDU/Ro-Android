@@ -1,33 +1,41 @@
 package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import co.hackingedu.ro.R;
-import co.hackingedu.ro.fragment.ScheduleDetailFragment;
 
 public class ScheduleDetailActivity extends Activity {
+
+    Integer position;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_detail);
+        setContentView(R.layout.schedule_detail);
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            ScheduleDetailFragment fragment = new ScheduleDetailFragment();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.schedule_detail_container, fragment)
-                    .commit();
+
+        //trying to get the getExtra data and set it to textView
+        TextView SpeakerName = (TextView)findViewById(R.id.speaker_name);
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+
+        if(b!=null)
+        {
+            Integer j =(Integer) b.get("lol");
+            SpeakerName.setText(j.toString());
         }
+
+
 
     }
 

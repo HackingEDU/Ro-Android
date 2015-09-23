@@ -10,6 +10,7 @@ public class MapInfo {
     public Drawable map_view;
 
 
+
     public static final String NAME_PREFIX = "Text_";
 
 }
