@@ -1,18 +1,20 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ScheduleDetailActivity extends Activity {
+import co.hackingedu.ro.R;
+
+public class MapViewImageActivity extends Activity {
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule_detail);
+        setContentView(R.layout.activity_map_view_image);
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);

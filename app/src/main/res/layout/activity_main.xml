@@ -25,6 +25,5 @@
         app:viewpager_animatedHeaderImage="true"
         />
 
-    <include layout="@layout/drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -19,7 +19,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <co.hackingedu.ro.LatoTextView
+    <co.hackingedu.ro.style.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp" />
 
-    <co.hackingedu.ro.LatoTextView
+    <co.hackingedu.ro.style.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"

@@ -1,4 +1,4 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.ViewAdapter;
 /**
  * Created by Spicycurryman on 9/14/15.
  */
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Info.FaqInfo;
+import co.hackingedu.ro.R;
 
 public class FaqRecyclerViewAdapter extends RecyclerView.Adapter<FaqRecyclerViewAdapter.FaqViewHolder> {
 

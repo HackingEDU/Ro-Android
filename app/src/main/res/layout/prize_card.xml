@@ -28,25 +28,17 @@
             android:adjustViewBounds="true"
             android:maxWidth="32dp"
             android:maxHeight="32dp"
-            android:scaleType="fitCenter"
-            />
+            android:scaleType="fitCenter" />
 
-
-
-        <co.hackingedu.ro.LatoTextView
-            android:layout_width="240dp"
+        <co.hackingedu.ro.style.LatoTextView
+            android:layout_width="212dp"
             android:layout_height="wrap_content"
-            android:text="Prizes include Macbook Pro Laptops, Oculus Rift, Apple Watches, Amazon Web Services, Namecheap Domains, and more."
+            android:text="Click for Prizes!"
             android:textColor="#000000"
             android:id="@+id/project_submission"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="25dp"
-            android:layout_marginEnd="35dp"
-            android:layout_centerVertical="true"
-            android:layout_alignRight="@+id/card_view"
-            android:layout_alignEnd="@+id/card_view"
-            android:layout_marginLeft="10dp"
-            />
+            android:layout_gravity="center"
+            android:layout_marginLeft="35dp"
+            android:textSize="20sp" />
 
     </android.support.v7.widget.CardView>
 

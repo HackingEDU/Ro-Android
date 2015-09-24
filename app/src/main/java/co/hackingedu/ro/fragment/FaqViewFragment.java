@@ -24,9 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.hackingedu.ro.FaqRecyclerViewAdapter;
+import co.hackingedu.ro.ViewAdapter.FaqRecyclerViewAdapter;
 import co.hackingedu.ro.Info.FaqInfo;
-import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.backend.BackendManager;
 

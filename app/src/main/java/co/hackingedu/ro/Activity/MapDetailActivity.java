@@ -1,13 +1,13 @@
-package co.hackingedu.ro;
+package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MapViewImageActivity extends Activity {
+import co.hackingedu.ro.R;
 
-
+public class MapDetailActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,7 @@ public class MapViewImageActivity extends Activity {
 
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 

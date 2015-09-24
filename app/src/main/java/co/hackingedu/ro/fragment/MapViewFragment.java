@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.hackingedu.ro.Info.MapInfo;
-import co.hackingedu.ro.Info.ScheduleInfo;
-import co.hackingedu.ro.MapRecyclerViewAdapter;
+import co.hackingedu.ro.ViewAdapter.MapRecyclerViewAdapter;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.backend.BackendManager;
 
