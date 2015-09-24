@@ -4,11 +4,14 @@ package co.hackingedu.ro.fragment;
  * Created by Spicycurryman on 9/14/15.
  */
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +31,11 @@ import co.hackingedu.ro.ViewAdapter.FaqRecyclerViewAdapter;
 import co.hackingedu.ro.Info.FaqInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.CacheManager;
 
 
 public class FaqViewFragment extends Fragment {
+    private final String TAG = "FAQViewFragment";
 
     /**
      * BackendManager to handle API Calls
@@ -42,6 +47,8 @@ public class FaqViewFragment extends Fragment {
      */
     private JSONArray faqsArray;
 
+    private CacheManager cacheManager;
+
     /**
      * final string for querying question
      */
@@ -51,6 +58,8 @@ public class FaqViewFragment extends Fragment {
      * final string for querying answer
      */
     private final String ANSWER_QUERY = "a";
+
+    private boolean updateLater;
 
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
@@ -63,9 +72,37 @@ public class FaqViewFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
+        cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
+        Log.i(TAG, "cacheManager success");
+
+        // pull from local storage for quick loading
+        try {
+            if(cacheManager.fileIsNull(cacheManager.FAQS_FILE)){
+                updateLater = false;
+                cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
+            }
+            faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
+        } catch (JSONException e) {
+            Log.i(TAG, "JSON Exception: onCreateView 2");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG, "IO Exception: onCreateView 2");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // instantiate backendManager to begin api calls!
-        backendManager = new BackendManager();
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -80,19 +117,18 @@ public class FaqViewFragment extends Fragment {
         mAdapter = new RecyclerViewMaterialAdapter(new FaqRecyclerViewAdapter(mContentItems));
 
         // save local copy of JSON arrays from backend Manager
-        try {
-            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 
         // loop through each faq in JSON Array and do frontend stuff!
         for (int i = 0; i < faqsArray.length(); i++)
         {
-
             FaqInfo item = new FaqInfo();
             try {
                 // parsing array into String
@@ -139,11 +175,13 @@ public class FaqViewFragment extends Fragment {
 
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+
+        /****************************************************************
+         *
+         *
+         * REMEMBER TO UPDATE THE INFO AFTER THIS!!!!!!!!!!!!!!!!!!!!!
+         *
+         *
+         ****************************************************************/
     }
-
-
-
-
-
-
 }

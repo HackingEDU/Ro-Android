@@ -4,7 +4,9 @@ package co.hackingedu.ro.fragment;
  * Created by Spicycurryman on 9/14/15.
  */
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +30,7 @@ import co.hackingedu.ro.Info.ScheduleInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ViewAdapter.ScheduleRecyclerViewAdapter;
 import co.hackingedu.ro.backend.BackendManager;
+import co.hackingedu.ro.backend.CacheManager;
 
 /**
  * Fragment for displaying Schedule View
@@ -35,9 +38,16 @@ import co.hackingedu.ro.backend.BackendManager;
 public class ScheduleViewFragment extends Fragment {
 
     /**
+     * Tag for Log
+     */
+    private final String TAG = "ScheduleViewFragment";
+
+    /**
      * BackendManager to handle API Calls
      */
     private BackendManager backendManager;
+
+    private CacheManager cacheManager;
 
     /**
      * JSONArray field to store response from backendManager
@@ -79,9 +89,40 @@ public class ScheduleViewFragment extends Fragment {
     public static final int ITEM_COUNT = 4; // not really necessary because JSONArray has length()
 
     public List<ScheduleInfo> mContentItems = new ArrayList<ScheduleInfo>();
+    private boolean updateLater;
 
     public static ScheduleViewFragment newInstance() {
         return new ScheduleViewFragment();
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
+        cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
+        Log.i(TAG, "cacheManager success");
+
+        // pull from local storage for quick loading
+        try {
+            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
+                updateLater = false;
+                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
+            }
+            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, context);
+        } catch (JSONException e) {
+            Log.i(TAG, "JSON Exception: onCreateView 2");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG, "IO Exception: onCreateView 2");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -89,7 +130,24 @@ public class ScheduleViewFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // instantiate backendManager to begin api calls!
-        backendManager = new BackendManager();
+//        backendManager = new BackendManager();
+
+        // instantiate cache manager and try to update the Events JSON File
+//        try {
+//            cacheManager = new CacheManager(cacheManager.EVENTS_FILE, inflater.getContext());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // pull from local storage for quick loading
+//        try {
+//            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, inflater.getContext());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -104,13 +162,13 @@ public class ScheduleViewFragment extends Fragment {
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
 
         // save local copy of JSON arrays from backend Manager
-        try {
-            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         // loop through each event in JSON Array and do frontend stuff!
         for (int i = 0; i < eventArray.length(); i++)
