@@ -22,15 +22,6 @@ import co.hackingedu.ro.fragment.RecyclerViewFragment;
 import co.hackingedu.ro.fragment.ScheduleViewFragment;
 
 public class MainActivity extends AppCompatActivity {
-    /**
-     * Parse App ID
-     */
-    private static final String PARSE_APP_ID = "nTbv002rk08wVJF0Vet2kcGVdkXC7tWKIcIKw5Yk";
-
-    /**
-     * Parse Client Key
-     */
-    private static final String PARSE_CLIENT_KEY = "oD8lv96vBBX2UZwaNyuiLQvtCHzAiAjDqimroIFZ";
 
     private MaterialViewPager mViewPager;
 
@@ -39,12 +30,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**
-         * Parse initialization
-         */
-        Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         setContentView(R.layout.activity_main);
 
