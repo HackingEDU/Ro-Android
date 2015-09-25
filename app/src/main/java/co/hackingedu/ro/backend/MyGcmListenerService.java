@@ -33,6 +33,8 @@ import co.hackingedu.ro.R;
 
 public class MyGcmListenerService extends GcmListenerService {
 
+    private final String NOTIFICATION_TITLE = "Update!";
+
     private static final String TAG = "MyGcmListenerService";
 
     /**
@@ -86,7 +88,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("GCM Message")
+                .setContentTitle(NOTIFICATION_TITLE)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

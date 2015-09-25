@@ -29,4 +29,8 @@ dependencies {
     }
     compile project(':json-simple-1.1')
     compile "com.google.android.gms:play-services-gcm:7.8.0"
+    dependencies {
+        compile 'com.parse.bolts:bolts-android:1.+'
+        compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    }
 }
