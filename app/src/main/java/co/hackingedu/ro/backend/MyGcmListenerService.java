@@ -28,7 +28,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import co.hackingedu.ro.MainActivity;
+import co.hackingedu.ro.Activity.MainActivity;
 import co.hackingedu.ro.R;
 
 public class MyGcmListenerService extends GcmListenerService {
