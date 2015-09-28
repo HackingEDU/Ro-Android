@@ -43,7 +43,9 @@ public class BackendManager {
             GENERAL_ENDPOINT = "/general",
             EVENTS_ENDPOINT = "/events",
             NOTIFS_ENDPOINT = "/notifications",
-            MAPS_ENDPOINT = "/maps";
+            MAPS_ENDPOINT = "/maps",
+            SPONSORS_ENDPOINT = "/sponsors",
+            PRIZES_ENDPOINT = "/prizes";
 
     /**
      * Private Endpoint to app
@@ -73,6 +75,45 @@ public class BackendManager {
      * @throws JSONException JSON conversion error on Array vs Object
      */
     public Object get(String _endpoint) throws IOException, JSONException {
+        String endpointResponse = EndpointHelper(_endpoint);
+
+        // TODO: error handling
+        JSONArray responseJsonArray;
+        JSONObject responseJsonObject;
+
+        // return JSON content
+        Object responseObject = new JSONArray(endpointResponse);
+
+        //responseObject = json;
+        if (responseObject instanceof JSONArray) {
+            // It's an array
+            Log.i(TAG, "array found!");
+            return responseJsonArray = (JSONArray)responseObject;
+        }
+        else if (responseObject instanceof JSONObject) {
+            // It's an object
+            Log.i(TAG, "object found!");
+            return responseJsonObject = (JSONObject)responseObject;
+        }
+        else {
+            // It's something else, like a string or number
+            Log.i(TAG, "value found!");
+            return responseObject;
+        }
+    }
+
+    public Object[] get() throws IOException, JSONException {
+        return null;
+        // todo: do all of the calls successfully
+    }
+
+    /**
+     * Helper for endpoints reading
+     * @param _endpoint
+     * @return a string to later convert to JSON
+     * @throws IOException
+     */
+    private String EndpointHelper(String _endpoint) throws IOException {
         // build URL String
         String urlString = ""
                 + NODE_ENDPOINT
@@ -96,30 +137,8 @@ public class BackendManager {
             responseStrBuilder.append(inputStr);
         }
 
-        // TODO: error handling
-        Object responseObject;
-        JSONArray responseJsonArray;
-        JSONObject responseJsonObject;
-
         // return JSON content
-        responseObject = new JSONArray(responseStrBuilder.toString());
-
-        //responseObject = json;
-        if (responseObject instanceof JSONArray) {
-            // It's an array
-            Log.i(TAG, "array found!");
-            return responseJsonArray = (JSONArray)responseObject;
-        }
-        else if (responseObject instanceof JSONObject) {
-            // It's an object
-            Log.i(TAG, "object found!");
-            return responseJsonObject = (JSONObject)responseObject;
-        }
-        else {
-            // It's something else, like a string or number
-            Log.i(TAG, "value found!");
-            return responseObject;
-        }
+        return responseStrBuilder.toString();
     }
 
     /**

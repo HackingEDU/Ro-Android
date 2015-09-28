@@ -1,11 +1,15 @@
 package co.hackingedu.ro.Activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,26 +19,70 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 import co.hackingedu.ro.R;
+import co.hackingedu.ro.backend.CacheManager;
 import co.hackingedu.ro.fragment.FaqViewFragment;
 import co.hackingedu.ro.fragment.MapViewFragment;
 import co.hackingedu.ro.fragment.RecyclerViewFragment;
 import co.hackingedu.ro.fragment.ScheduleViewFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private final String TAG = "MainActivity";
 
     private MaterialViewPager mViewPager;
 
     private Toolbar toolbar;
 
     @Override
+    protected void onRestart(){
+        super.onRestart();
+
+        Log.i(TAG, "reset!");
+
+        //setUpMaterialViewPager();
+        //CacheManager cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(Activity.getContext()));
+        Context c = getApplicationContext();
+        try {
+            CacheManager cacheManager = new CacheManager(c);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.i(TAG, "new views");
+        setUpMaterialViewPager();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         setTitle("");
 
+        // helper method to setup MaterialViewPager
+        setUpMaterialViewPager();
+
+        View logo = findViewById(R.id.logo_white);
+        if (logo != null)
+            logo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.notifyHeaderChanged();
+                    Toast.makeText(getApplicationContext(), "Have fun at HackingEDU :)", Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    /**
+     * Material View Pager Setup Helper method
+     */
+    private void setUpMaterialViewPager(){
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
         toolbar = mViewPager.getToolbar();
@@ -122,16 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
-
-        View logo = findViewById(R.id.logo_white);
-        if (logo != null)
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Have fun at HackingEDU :)", Toast.LENGTH_SHORT).show();
-                }
-            });
     }
 
     @Override

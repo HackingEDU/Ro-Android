@@ -30,7 +30,9 @@ public class CacheManager {
             GENERAL_FILE = "/general",
             EVENTS_FILE = "/events",
             NOTIFS_FILE = "/notifications",
-            MAPS_FILE = "/maps";
+            MAPS_FILE = "/maps",
+            PRIZES_FILE = "/prizes",
+            SPONSORS_FILE = "/sponsors";
 
     /**
      * Backend Manager to handle API Calls and update Cached information
@@ -94,12 +96,13 @@ public class CacheManager {
 
     /**
      * Public void to poll server for updates on all JSON Files
+     * TODO: FIGURE OUT WHY IT STOPS AT FAQ
      */
     public void updateAllJSONFiles() throws IOException, JSONException {
+        updateJsonFile(NOTIFS_FILE);
         updateJsonFile(FAQS_FILE);
         updateJsonFile(GENERAL_FILE);
         updateJsonFile(EVENTS_FILE);
-        updateJsonFile(NOTIFS_FILE);
         updateJsonFile(MAPS_FILE);
     }
 

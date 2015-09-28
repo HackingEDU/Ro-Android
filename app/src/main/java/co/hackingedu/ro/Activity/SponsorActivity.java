@@ -6,23 +6,50 @@ package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.hackingedu.ro.Info.MapInfo;
 import co.hackingedu.ro.Info.SponsorInfo;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.ViewAdapter.SponsorRecyclerViewAdapter;
+import co.hackingedu.ro.backend.CacheManager;
 
 
 public class SponsorActivity extends Activity {
+
+    private final String TAG = "SponsorActivity";
+
+    /**
+     * final string for querying sponsor names
+     */
+    private final String SPONSORS_NAME_QUERY = "name";
+
+    private final String SPONSORS_URL_QUERY = "url";
+
+    private CacheManager cacheManager;
+
+    private boolean updateLater;
+
+    /**
+     * JSONArray field to store response from backendManager
+     */
+    private JSONArray sponsorArray;
 
     private List<SponsorInfo> mContentItems = new ArrayList<SponsorInfo>();
     private RecyclerView mRecyclerView;
@@ -41,6 +68,8 @@ public class SponsorActivity extends Activity {
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new RecyclerViewMaterialAdapter(new SponsorRecyclerViewAdapter(mContentItems));
+
+        populateCards();
 
         SponsorInfo item1 = new SponsorInfo();
         item1.sponsor_name = "Twilio";
@@ -68,6 +97,47 @@ public class SponsorActivity extends Activity {
         MaterialViewPagerHelper.registerRecyclerView(this, mRecyclerView, null);
 
 
+    }
+
+    private void populateCards(){
+        Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
+        cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+        Log.i(TAG, "cacheManager success");
+
+        // pull from local storage for quick loading
+        try {
+            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
+                updateLater = false;
+                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+                Log.i(TAG, "updateLater status: " + updateLater);
+            } else {
+                // we need to update later!!!!
+                updateLater = true;
+                Log.i(TAG, "updateLater status: " + updateLater);
+            }
+            sponsorArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, getApplicationContext());
+        } catch (JSONException e) {
+            Log.i(TAG, "JSON Exception: onCreateView 2");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG, "IO Exception: onCreateView 2");
+            e.printStackTrace();
+        }
+
+        // loop through each sponsor in JSON Array and do frontend stuff!
+        for (int i = 0; i < sponsorArray.length(); i++)
+        {
+            SponsorInfo item = new SponsorInfo();
+            try {
+                // parsing array into String
+                item.sponsor_name = (String) ((JSONObject) sponsorArray.get(i)).get(SPONSORS_NAME_QUERY);
+                item.sponsor_url = (String) ((JSONObject) sponsorArray.get(i)).get(SPONSORS_URL_QUERY);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            mContentItems.add(item);
+        }
     }
 
     @Override
