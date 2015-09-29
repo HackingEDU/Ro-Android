@@ -61,7 +61,7 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
         builder.setSmallIcon(R.drawable.logo_white);
         builder.setAutoCancel(true);
 
-        int fragmentPosition = 3;
+        int fragmentPosition = 0;
         try {
             fragmentPosition = data.getInt("fragment");
         } catch (JSONException e) {
@@ -85,11 +85,12 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
                 break;
         }
 
+        intent.setClass(context, MainActivity.class);
 
+//        new Intent;
         PendingIntent contentIntent;
-
-        contentIntent = PendingIntent.getActivity(context, 0,
-                new Intent(context, MainActivity.class), 0);
+//        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(contentIntent);
 

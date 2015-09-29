@@ -83,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "restarted");
 
         super.onRestart();
-
-        Intent intent = getIntent();
-        int fragmentPosition = intent.getIntExtra("fragment", 0);
-        mViewPager.getViewPager().setCurrentItem(fragmentPosition);
     }
 
     @Override
@@ -99,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         Log.i(TAG, "resumed");
         super.onResume();
+        Intent intent = getIntent();
+        int fragmentPosition = intent.getIntExtra("fragment", 2); // works
+        mViewPager.getViewPager().setCurrentItem(fragmentPosition);
     }
 
     @Override
