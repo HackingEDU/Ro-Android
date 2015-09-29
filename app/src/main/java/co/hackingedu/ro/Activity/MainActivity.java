@@ -2,6 +2,7 @@ package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -39,15 +40,114 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart(){
-        super.onRestart();
+        //super.onRestart();
 
+//        Log.i(TAG, "reset!");
+//
+//        //setUpMaterialViewPager();
+//        //CacheManager cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(Activity.getContext()));
+//        try {
+//            Log.i(TAG, "initialize cacheManager");
+//            //CacheManager cacheManager = new CacheManager(c);
+//            CacheManager cacheManager =
+//                    new CacheManager(
+//                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+//            Log.i(TAG, "update Events");
+//            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+//
+//            Log.i(TAG, "update FAQ");
+//            cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+//
+//            Log.i(TAG, "update GENERAL");
+//            cacheManager.updateJsonFile(cacheManager.GENERAL_FILE);
+//
+//            Log.i(TAG, "update Maps");
+//            cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+//
+//            Log.i(TAG, "update Notifs");
+//            cacheManager.updateJsonFile(cacheManager.NOTIFS_FILE);
+//
+//            Log.i(TAG, "update Prizes");
+//            cacheManager.updateJsonFile(cacheManager.PRIZES_FILE);
+//
+//            Log.i(TAG, "update sponsors");
+//            cacheManager.updateJsonFile(cacheManager.SPONSORS_FILE);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Log.i(TAG, "new views");
+//        setUpMaterialViewPager();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart(){
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+        setTitle("");
+
+        reloadCards();
+
+        // helper method to setup MaterialViewPager
+        setUpMaterialViewPager();
+
+        View logo = findViewById(R.id.logo_white);
+        if (logo != null) {
+            logo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mViewPager.notifyHeaderChanged();
+                    Toast.makeText(getApplicationContext(), "Have fun at HackingEDU :)", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        Intent intent = getIntent();
+        int fragmentPosition = intent.getIntExtra("fragment", 0);
+        mViewPager.getViewPager().setCurrentItem(fragmentPosition);
+    }
+
+    public void reloadCards(){
         Log.i(TAG, "reset!");
 
         //setUpMaterialViewPager();
         //CacheManager cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(Activity.getContext()));
-        Context c = getApplicationContext();
         try {
-            CacheManager cacheManager = new CacheManager(c);
+            Log.i(TAG, "initialize cacheManager");
+            //CacheManager cacheManager = new CacheManager(c);
+            CacheManager cacheManager =
+                    new CacheManager(
+                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+            Log.i(TAG, "update Events");
+            cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+
+            Log.i(TAG, "update FAQ");
+            cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+
+            Log.i(TAG, "update GENERAL");
+            cacheManager.updateJsonFile(cacheManager.GENERAL_FILE);
+
+            Log.i(TAG, "update Maps");
+            cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+
+            Log.i(TAG, "update Notifs");
+            cacheManager.updateJsonFile(cacheManager.NOTIFS_FILE);
+
+            Log.i(TAG, "update Prizes");
+            cacheManager.updateJsonFile(cacheManager.PRIZES_FILE);
+
+            Log.i(TAG, "update sponsors");
+            cacheManager.updateJsonFile(cacheManager.SPONSORS_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -58,26 +158,6 @@ public class MainActivity extends AppCompatActivity {
         setUpMaterialViewPager();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-        setTitle("");
-
-        // helper method to setup MaterialViewPager
-        setUpMaterialViewPager();
-
-        View logo = findViewById(R.id.logo_white);
-        if (logo != null)
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Have fun at HackingEDU :)", Toast.LENGTH_SHORT).show();
-                }
-            });
-    }
 
     /**
      * Material View Pager Setup Helper method
@@ -163,12 +243,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //execute others actions if needed (ex : modify your header logo)
-
                 return null;
             }
         });
 
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
+
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
     }
 

@@ -71,25 +71,25 @@ public class SponsorActivity extends Activity {
 
         populateCards();
 
-        SponsorInfo item1 = new SponsorInfo();
-        item1.sponsor_name = "Twilio";
-        item1.sponsor_url = "http://www.Twilio.com";
-        mContentItems.add(item1);
-
-        SponsorInfo item2 = new SponsorInfo();
-        item2.sponsor_name = "Makeschool";
-        item2.sponsor_url = "http://www.Makeschool.com";
-        mContentItems.add(item2);
-
-        SponsorInfo item3 = new SponsorInfo();
-        item3.sponsor_name = "IBM";
-        item3.sponsor_url = "http://www.IBM.com";
-        mContentItems.add(item3);
-
-        SponsorInfo item4 = new SponsorInfo();
-        item4.sponsor_name = "Google";
-        item4.sponsor_url = "http://www.google.com";
-        mContentItems.add(item4);
+//        SponsorInfo item1 = new SponsorInfo();
+//        item1.sponsor_name = "Twilio";
+//        item1.sponsor_url = "http://www.Twilio.com";
+//        mContentItems.add(item1);
+//
+//        SponsorInfo item2 = new SponsorInfo();
+//        item2.sponsor_name = "Makeschool";
+//        item2.sponsor_url = "http://www.Makeschool.com";
+//        mContentItems.add(item2);
+//
+//        SponsorInfo item3 = new SponsorInfo();
+//        item3.sponsor_name = "IBM";
+//        item3.sponsor_url = "http://www.IBM.com";
+//        mContentItems.add(item3);
+//
+//        SponsorInfo item4 = new SponsorInfo();
+//        item4.sponsor_name = "Google";
+//        item4.sponsor_url = "http://www.google.com";
+//        mContentItems.add(item4);
 
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
@@ -107,21 +107,18 @@ public class SponsorActivity extends Activity {
 
         // pull from local storage for quick loading
         try {
-            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
-                updateLater = false;
-                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
-                Log.i(TAG, "updateLater status: " + updateLater);
-            } else {
-                // we need to update later!!!!
-                updateLater = true;
-                Log.i(TAG, "updateLater status: " + updateLater);
-            }
-            sponsorArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, getApplicationContext());
+//            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
+//                updateLater = false;
+//                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            } else {
+//                // we need to update later!!!!
+//                updateLater = true;
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            }
+            sponsorArray = cacheManager.getJsonArray(cacheManager.SPONSORS_FILE, getApplicationContext());
         } catch (JSONException e) {
             Log.i(TAG, "JSON Exception: onCreateView 2");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
 

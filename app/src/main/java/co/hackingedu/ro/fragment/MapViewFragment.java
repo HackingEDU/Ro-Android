@@ -84,25 +84,31 @@ public class MapViewFragment extends Fragment {
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
 
-        // pull from local storage for quick loading
         try {
-            if(cacheManager.fileIsNull(cacheManager.MAPS_FILE)){
-                updateLater = false;
-                cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
-                Log.i(TAG, "updateLater status: " + updateLater);
-            } else {
-                // we need to update later!!!!
-                updateLater = true;
-                Log.i(TAG, "updateLater status: " + updateLater);
-            }
             mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
         } catch (JSONException e) {
-            Log.i(TAG, "JSON Exception: onCreateView 2");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
+
+        // pull from local storage for quick loading
+//        try {
+//            if(cacheManager.fileIsNull(cacheManager.MAPS_FILE)){
+//                updateLater = false;
+//                cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            } else {
+//                // we need to update later!!!!
+//                updateLater = true;
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            }
+//            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
+//        } catch (JSONException e) {
+//            Log.i(TAG, "JSON Exception: onCreateView 2");
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.i(TAG, "IO Exception: onCreateView 2");
+//            e.printStackTrace();
+//        }
     }
 
     @Override

@@ -60,25 +60,25 @@ public class PrizeActivity extends Activity {
 
         populateCards();
 
-        PrizeInfo item1 = new PrizeInfo();
-        item1.prize_name = "Macbook air";
-        item1.prize_description = "200 GB";
-        mContentItems.add(item1);
-
-        PrizeInfo item2 = new PrizeInfo();
-        item2.prize_name = "Macbook air";
-        item2.prize_description = "200 GB";
-        mContentItems.add(item2);
-
-        PrizeInfo item3 = new PrizeInfo();
-        item3.prize_name = "Macbook air";
-        item3.prize_description = "200 GB";
-        mContentItems.add(item3);
-
-        PrizeInfo item4 = new PrizeInfo();
-        item4.prize_name = "Macbook air";
-        item4.prize_description = "200 GB";
-        mContentItems.add(item4);
+//        PrizeInfo item1 = new PrizeInfo();
+//        item1.prize_name = "Macbook air";
+//        item1.prize_description = "200 GB";
+//        mContentItems.add(item1);
+//
+//        PrizeInfo item2 = new PrizeInfo();
+//        item2.prize_name = "Macbook air";
+//        item2.prize_description = "200 GB";
+//        mContentItems.add(item2);
+//
+//        PrizeInfo item3 = new PrizeInfo();
+//        item3.prize_name = "Macbook air";
+//        item3.prize_description = "200 GB";
+//        mContentItems.add(item3);
+//
+//        PrizeInfo item4 = new PrizeInfo();
+//        item4.prize_name = "Macbook air";
+//        item4.prize_description = "200 GB";
+//        mContentItems.add(item4);
 
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
@@ -96,21 +96,18 @@ public class PrizeActivity extends Activity {
 
         // pull from local storage for quick loading
         try {
-            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
-                updateLater = false;
-                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
-                Log.i(TAG, "updateLater status: " + updateLater);
-            } else {
-                // we need to update later!!!!
-                updateLater = true;
-                Log.i(TAG, "updateLater status: " + updateLater);
-            }
-            prizeArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, getApplicationContext());
+//            if(cacheManager.fileIsNull(cacheManager.PRIZES_FILE)){
+//                updateLater = false;
+//                cacheManager.updateJsonFile(cacheManager.PRIZES_FILE);
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            } else {
+//                // we need to update later!!!!
+//                updateLater = true;
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            }
+            prizeArray = cacheManager.getJsonArray(cacheManager.PRIZES_FILE, getApplicationContext());
         } catch (JSONException e) {
             Log.i(TAG, "JSON Exception: onCreateView 2");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
 

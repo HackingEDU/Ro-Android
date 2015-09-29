@@ -35,18 +35,19 @@ import co.hackingedu.ro.backend.CacheManager;
 
 
 public class FaqViewFragment extends Fragment {
-    private final String TAG = "FAQViewFragment";
-
     /**
-     * BackendManager to handle API Calls
+     * Debugging tag
      */
-    private BackendManager backendManager;
+    private final String TAG = "FAQViewFragment";
 
     /**
      * JSONArray field to store response from backendManager
      */
     private JSONArray faqsArray;
 
+    /**
+     * Cache Manager
+     */
     private CacheManager cacheManager;
 
     /**
@@ -79,26 +80,31 @@ public class FaqViewFragment extends Fragment {
 //            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
-
-        // pull from local storage for quick loading
         try {
-            if(cacheManager.fileIsNull(cacheManager.FAQS_FILE)){
-                updateLater = false;
-                cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
-                Log.i(TAG, "updateLater status: " + updateLater);
-            } else {
-                // we need to update later!!!!
-                updateLater = true;
-                Log.i(TAG, "updateLater status: " + updateLater);
-            }
             faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
         } catch (JSONException e) {
-            Log.i(TAG, "JSON Exception: onCreateView 2");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
+
+        // pull from local storage for quick loading
+//        try {
+//            if(cacheManager.fileIsNull(cacheManager.FAQS_FILE)){
+//                updateLater = false;
+//                cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            } else {
+//                // we need to update later!!!!
+//                updateLater = true;
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            }
+//            faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
+//        } catch (JSONException e) {
+//            Log.i(TAG, "JSON Exception: onCreateView 2");
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.i(TAG, "IO Exception: onCreateView 2");
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -116,22 +122,13 @@ public class FaqViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new FaqRecyclerViewAdapter(mContentItems));
 
-        // save local copy of JSON arrays from backend Manager
-//        try {
-//            faqsArray = (JSONArray) backendManager.get(backendManager.FAQS_ENDPOINT);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-
         // loop through each faq in JSON Array and do frontend stuff!
         for (int i = 0; i < faqsArray.length(); i++)
         {
             FaqInfo item = new FaqInfo();
             try {
                 // parsing array into String
+                Log.i(TAG, "populating item!");
                 item.question = (String) ((JSONObject) faqsArray.get(i)).get(QUESTION_QUERY);
                 item.answer = (String) ((JSONObject) faqsArray.get(i)).get(ANSWER_QUERY);
             } catch (JSONException e) {
@@ -175,13 +172,5 @@ public class FaqViewFragment extends Fragment {
 
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
-
-        /****************************************************************
-         *
-         *
-         * REMEMBER TO UPDATE THE INFO AFTER THIS!!!!!!!!!!!!!!!!!!!!!
-         *
-         *
-         ****************************************************************/
     }
 }

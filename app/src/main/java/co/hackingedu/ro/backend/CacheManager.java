@@ -96,7 +96,6 @@ public class CacheManager {
 
     /**
      * Public void to poll server for updates on all JSON Files
-     * TODO: FIGURE OUT WHY IT STOPS AT FAQ
      */
     public void updateAllJSONFiles() throws IOException, JSONException {
         updateJsonFile(NOTIFS_FILE);
@@ -104,6 +103,8 @@ public class CacheManager {
         updateJsonFile(GENERAL_FILE);
         updateJsonFile(EVENTS_FILE);
         updateJsonFile(MAPS_FILE);
+        updateJsonFile(SPONSORS_FILE);
+        updateJsonFile(PRIZES_FILE);
     }
 
     /**
@@ -114,7 +115,7 @@ public class CacheManager {
         // utilize the backend manager to call the API
         Log.i(TAG, "File to update: " + JsonFile);
         String JsonToString = (backendManager.get(JsonFile)).toString();
-        Log.i(TAG, "JsonToString: " + JsonToString);
+        Log.i(TAG, "UpdateJsonFile JsonToString: " + JsonToString);
         // locally save the JSON String as a preference accessible by the context
         editor.putString(JsonFile, JsonToString);
 
@@ -149,7 +150,7 @@ public class CacheManager {
      */
     public String getJsonString(String JsonFile, Context _context){
         String str = getSharedPreferences(_context).getString(JsonFile, null);
-        Log.i(TAG, "JSONString: " + str);
+        Log.i(TAG, "getJsonString JSONString: " + str);
         return str;
     }
 
@@ -161,10 +162,10 @@ public class CacheManager {
      * @throws JSONException whenever there is an issue with String-JSON conversion
      */
     public JSONArray getJsonArray(String JsonFile, Context _context) throws JSONException {
-        if(getJsonString(JsonFile, _context) == null){
-            // handle this issue!
-            return null;
-        }
+//        if(getJsonString(JsonFile, _context) == null){
+//            // handle this issue!
+//            return null;
+//        }
         return new JSONArray(getJsonString(JsonFile, _context));
     }
 
