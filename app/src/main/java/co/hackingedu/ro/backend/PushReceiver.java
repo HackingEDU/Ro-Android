@@ -61,13 +61,13 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
         builder.setSmallIcon(R.drawable.logo_white);
         builder.setAutoCancel(true);
 
-        int fragmentPosition = 0;
+        int fragmentPosition = 3;
         try {
             fragmentPosition = data.getInt("fragment");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        switch(fragmentPosition){
+        switch(fragmentPosition % 4){
             case 0:
                 intent.putExtra("fragment", 0);
                 break;

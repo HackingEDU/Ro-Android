@@ -80,13 +80,25 @@ public class MainActivity extends AppCompatActivity {
 //
 //        Log.i(TAG, "new views");
 //        setUpMaterialViewPager();
+        Log.i(TAG, "restarted");
+
         super.onRestart();
+
+        Intent intent = getIntent();
+        int fragmentPosition = intent.getIntExtra("fragment", 0);
+        mViewPager.getViewPager().setCurrentItem(fragmentPosition);
     }
 
     @Override
     protected void onStart(){
-
+        Log.i(TAG, "started");
         super.onStart();
+    }
+
+    @Override
+    protected void onResume(){
+        Log.i(TAG, "resumed");
+        super.onResume();
     }
 
     @Override
@@ -111,10 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
-        Intent intent = getIntent();
-        int fragmentPosition = intent.getIntExtra("fragment", 0);
-        mViewPager.getViewPager().setCurrentItem(fragmentPosition);
     }
 
     public void reloadCards(){
