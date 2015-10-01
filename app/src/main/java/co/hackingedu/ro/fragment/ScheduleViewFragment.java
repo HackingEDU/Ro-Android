@@ -144,7 +144,8 @@ public class ScheduleViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems,
+                eventArray));
 
         // loop through each event in JSON Array and do frontend stuff!
         for (int i = 0; i < eventArray.length(); i++)

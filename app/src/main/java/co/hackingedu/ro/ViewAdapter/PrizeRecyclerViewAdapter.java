@@ -76,12 +76,7 @@ public class PrizeRecyclerViewAdapter extends RecyclerView.Adapter<PrizeRecycler
             prize_desc = (TextView) v.findViewById(R.id.prize_desc);
             prize_card_recycle = (CardView) v.findViewById(R.id.prize_card_recycle);
             context = v.getContext();
-
-
         }
-
-
-
     }
 
     @Override

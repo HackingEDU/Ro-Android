@@ -10,9 +10,9 @@ import com.parse.ParseInstallation;
  */
 public class App extends Application {
 
-    private final String PARSE_APP_ID = "nTbv002rk08wVJF0Vet2kcGVdkXC7tWKIcIKw5Yk";
+    private final String PARSE_APP_ID = "6iCemurReQldHcZGy9SgMjMKpIM1SVb91lzD8sKi";
 
-    private final String PARSE_CLIENT_KEY = "oD8lv96vBBX2UZwaNyuiLQvtCHzAiAjDqimroIFZ";
+    private final String PARSE_CLIENT_KEY = "j9yKLdSIcXEO8w53Aiz8VwKanWqgmlWXwsb92Cfo";
 
     @Override
     public void onCreate() {

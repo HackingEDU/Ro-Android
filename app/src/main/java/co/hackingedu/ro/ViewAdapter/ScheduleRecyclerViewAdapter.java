@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import co.hackingedu.ro.Info.ScheduleInfo;
@@ -19,11 +23,34 @@ import co.hackingedu.ro.Activity.ScheduleDetailActivity;
 
 public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder> {
 
-    List<ScheduleInfo> scheduleInfoList;
+    /**
+     * String for referencing Intent Extras
+     */
+    private static String INTENT_EXTRA_SPEAKER_KEY = "speaker";
+
+    /**
+     * String for referencing Intent Extras
+     */
+    private static String INTENT_EXTRA_IMAGE_KEY = "image";
+
+    /**
+     * String for referencing Intent Extras
+     */
+    private static String INTENT_EXTRA_ABOUT_KEY = "about";
+
+    private List<ScheduleInfo> scheduleInfoList;
     static final int TYPE_SCHEDULE = 0;
 
-    public ScheduleRecyclerViewAdapter(List<ScheduleInfo> scheduleInfoList) {
-        this.scheduleInfoList = scheduleInfoList;
+    static JSONArray eventArray;
+
+    /**
+     * Constructor for ScheduleRecyclerViewAdapter
+     * @param _scheduleInfoList Info List
+     * @param _eventArray
+     */
+    public ScheduleRecyclerViewAdapter(List<ScheduleInfo> _scheduleInfoList, JSONArray _eventArray) {
+        scheduleInfoList = _scheduleInfoList;
+        eventArray = _eventArray;
     }
 
     @Override
@@ -56,12 +83,10 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
     }
 
     public static class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView schedule_event;
         public TextView time_location;
         public CardView schedule_card_view;
         private final Context context;
-
 
         public ScheduleViewHolder(View v) {
             super(v);
@@ -78,10 +103,17 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             //you can use get adapter position to get the position of the recycler item
             //put Extra to save Data
             Intent i = new Intent(context, ScheduleDetailActivity.class);
-            i.putExtra("lol", getAdapterPosition());
+            try {
+                i.putExtra(INTENT_EXTRA_SPEAKER_KEY,
+                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_SPEAKER_KEY));
+                i.putExtra(INTENT_EXTRA_IMAGE_KEY,
+                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_IMAGE_KEY));
+                i.putExtra(INTENT_EXTRA_ABOUT_KEY,
+                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_ABOUT_KEY));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             context.startActivity(i);
-
-
         }
     }
 

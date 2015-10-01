@@ -79,13 +79,15 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
             map_card_view.setOnClickListener(this);
         }
 
-
+        /**
+         * onClick Map event
+         * @param v view that was clicked
+         */
         @Override
         public void onClick(View v) {
             final Intent intent;
             intent =  new Intent(context, MapViewImageActivity.class);
             context.startActivity(intent);
-
         }
     }
 
