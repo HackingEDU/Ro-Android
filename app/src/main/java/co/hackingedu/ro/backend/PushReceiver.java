@@ -23,16 +23,28 @@ import co.hackingedu.ro.R;
  * Created by Joseph on 9/28/15.
  */
 public class PushReceiver extends ParsePushBroadcastReceiver {
+    /**
+     * Debugging Tag
+     **/
     private final String TAG = "PushReceiver";
 
+    /**
+     * This is the key to get parse's push notification data
+     **/
     public static final String PARSE_DATA_KEY = "com.parse.Data";
 
+    /**
+     * Receiver of push notifications
+     **/
     @Override
     protected Notification getNotification(Context context, Intent intent) {
         // deactivate standard notification
         return null;
     }
 
+    /**
+     * Receiver of opening push 
+     **/
     @Override
     protected void onPushOpen(Context context, Intent intent) {
         // Implement
@@ -41,6 +53,9 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
         super.onPushOpen(context, intent);
     }
 
+    /**
+     * Receiver of push notifications
+     **/
     @Override
     protected void onPushReceive(Context context, Intent intent) {
         JSONObject data = getDataFromIntent(intent);
@@ -61,12 +76,14 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
         builder.setSmallIcon(R.drawable.logo_white);
         builder.setAutoCancel(true);
 
+        // try getting specified fragment navigation data from push notification
         int fragmentPosition = 0;
         try {
             fragmentPosition = data.getInt("fragment");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        // upsert fragment navigation integer into intent
         switch(fragmentPosition % 4){
             case 0:
                 intent.putExtra("fragment", 0);
@@ -84,23 +101,20 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
                 intent.putExtra("fragment", 0);
                 break;
         }
-
+        
+        // set activity for navigation
         intent.setClass(context, MainActivity.class);
 
-//        new Intent;
+        //  new PendingIntent for navigation on the push notification
         PendingIntent contentIntent;
-//        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(contentIntent);
 
-//        builder.setContentIntent(PendingIntent.getActivity(context, 0, intent, 0));
-
-        // OPTIONAL create soundUri and set sound:
+        // OPTIONAL create soundUri and set sound
 //        builder.setSound(soundUri);
 
-        // reload cards
-//        new MainActivity().reloadCards();
+        // reload json files
         try {
             new CacheManager(PreferenceManager.getDefaultSharedPreferences(context)).updateAllJSONFiles();
         } catch (IOException e) {
@@ -109,12 +123,13 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
             e.printStackTrace();
         }
 
+        // create push notification here
         notificationManager.notify("MyTag", 0, builder.build());
-
-
-//        super.onPushReceive(context, intent);
     }
 
+    /**
+     * parse data from push notification helper method
+     **/
     private JSONObject getDataFromIntent(Intent intent) {
         JSONObject data = null;
         try {
