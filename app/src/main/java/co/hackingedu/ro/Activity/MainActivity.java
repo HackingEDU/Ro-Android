@@ -95,8 +95,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         Log.i(TAG, "resumed");
         super.onResume();
+        
+        // get intent and determine the fragment the push notification points to - default 0
         Intent intent = getIntent();
-        int fragmentPosition = intent.getIntExtra("fragment", 2); // works
+        int fragmentPosition = intent.getIntExtra("fragment", 0); // works
         mViewPager.getViewPager().setCurrentItem(fragmentPosition);
     }
 
