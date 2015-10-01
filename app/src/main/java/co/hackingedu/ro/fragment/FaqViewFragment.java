@@ -60,8 +60,6 @@ public class FaqViewFragment extends Fragment {
      */
     private final String ANSWER_QUERY = "a";
 
-    private boolean updateLater;
-
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
     public static final int ITEM_COUNT = 4;
@@ -72,12 +70,15 @@ public class FaqViewFragment extends Fragment {
         return new FaqViewFragment();
     }
 
+    /**
+     * on attach fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
 
         Log.i(TAG, "instantiating cacheManger");
-//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
         try {
@@ -85,33 +86,25 @@ public class FaqViewFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        // pull from local storage for quick loading
-//        try {
-//            if(cacheManager.fileIsNull(cacheManager.FAQS_FILE)){
-//                updateLater = false;
-//                cacheManager.updateJsonFile(cacheManager.FAQS_FILE);
-//                Log.i(TAG, "updateLater status: " + updateLater);
-//            } else {
-//                // we need to update later!!!!
-//                updateLater = true;
-//                Log.i(TAG, "updateLater status: " + updateLater);
-//            }
-//            faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
-//        } catch (JSONException e) {
-//            Log.i(TAG, "JSON Exception: onCreateView 2");
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            Log.i(TAG, "IO Exception: onCreateView 2");
-//            e.printStackTrace();
-//        }
     }
 
+    /**
+     * Create view handler
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
+    /**
+     * After View created
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -137,40 +130,38 @@ public class FaqViewFragment extends Fragment {
             mContentItems.add(item);
         }
 
-        FaqInfo item1 = new FaqInfo();
-        item1.question = "Where/when to submit my hack?";
-        item1.answer = "All hacks must submitted to ChallengePost\n" +
-                "www.challengepost.com/HackingEDU by 9:30am\n" +
-                " on Sunday in order to be eligible for prizes.";
-        mContentItems.add(item1);
-
-        FaqInfo item2 = new FaqInfo();
-        item2.question = "Who can help me with coding? ";
-        item2.answer = "Anyone with a HackingEDU Staff shirt can connect\n" +
-                "you with a sponsor or experience team member \n" +
-                "depending on the language or framework.";
-        mContentItems.add(item2);
-
-        FaqInfo item3 = new FaqInfo();
-        item3.question = "Can someone help me with Git?";
-        item3.answer = "Look for Vivek Vinodh, the tall,dark, and handsome \n" +
-                "Indian guy. He is the Git master. He should be \n" +
-                "sleeping in the stands right now.";
-        mContentItems.add(item3);
-
-        FaqInfo item4 = new FaqInfo();
-        item4.question = "Can someone help me with Git?";
-        item4.answer = "Look for Vivek Vinodh, the tall,dark, and handsome \n" +
-                "Indian guy. He is the Git master. He should be \n" +
-                "sleeping in the stands right now.";
-        mContentItems.add(item4);
-
+        // static cards
+//        FaqInfo item1 = new FaqInfo();
+//        item1.question = "Where/when to submit my hack?";
+//        item1.answer = "All hacks must submitted to ChallengePost\n" +
+//                "www.challengepost.com/HackingEDU by 9:30am\n" +
+//                " on Sunday in order to be eligible for prizes.";
+//        mContentItems.add(item1);
+//
+//        FaqInfo item2 = new FaqInfo();
+//        item2.question = "Who can help me with coding? ";
+//        item2.answer = "Anyone with a HackingEDU Staff shirt can connect\n" +
+//                "you with a sponsor or experience team member \n" +
+//                "depending on the language or framework.";
+//        mContentItems.add(item2);
+//
+//        FaqInfo item3 = new FaqInfo();
+//        item3.question = "Can someone help me with Git?";
+//        item3.answer = "Look for Vivek Vinodh, the tall,dark, and handsome \n" +
+//                "Indian guy. He is the Git master. He should be \n" +
+//                "sleeping in the stands right now.";
+//        mContentItems.add(item3);
+//
+//        FaqInfo item4 = new FaqInfo();
+//        item4.question = "Can someone help me with Git?";
+//        item4.answer = "Look for Vivek Vinodh, the tall,dark, and handsome \n" +
+//                "Indian guy. He is the Git master. He should be \n" +
+//                "sleeping in the stands right now.";
+//        mContentItems.add(item4);
 
         mAdapter.notifyDataSetChanged();
 
         mRecyclerView.setAdapter(mAdapter);
-
-
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
 }

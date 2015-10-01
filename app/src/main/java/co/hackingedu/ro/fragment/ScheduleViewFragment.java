@@ -96,12 +96,15 @@ public class ScheduleViewFragment extends Fragment {
         return new ScheduleViewFragment();
     }
 
+    /**
+     * on attach fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
 
         Log.i(TAG, "instantiating cacheManger");
-//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
 
@@ -130,25 +133,6 @@ public class ScheduleViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // instantiate backendManager to begin api calls!
-//        backendManager = new BackendManager();
-
-        // instantiate cache manager and try to update the Events JSON File
-//        try {
-//            cacheManager = new CacheManager(cacheManager.EVENTS_FILE, inflater.getContext());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // pull from local storage for quick loading
-//        try {
-//            eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, inflater.getContext());
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
@@ -161,15 +145,6 @@ public class ScheduleViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new RecyclerViewMaterialAdapter(new ScheduleRecyclerViewAdapter(mContentItems));
-
-        // save local copy of JSON arrays from backend Manager
-//        try {
-//            eventArray = (JSONArray) backendManager.get(backendManager.EVENTS_ENDPOINT);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         // loop through each event in JSON Array and do frontend stuff!
         for (int i = 0; i < eventArray.length(); i++)
@@ -187,25 +162,25 @@ public class ScheduleViewFragment extends Fragment {
         }
 
         // static examples
-        ScheduleInfo item1 = new ScheduleInfo();
-        item1.schedule_event = "Badge Pickup";
-        item1.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
-        mContentItems.add(item1);
-
-        ScheduleInfo item2 = new ScheduleInfo();
-        item2.schedule_event = "Breakfast";
-        item2.time_location = "9:30 a.m. - 10:45 a.m. | Main Lobby";
-        mContentItems.add(item2);
-
-        ScheduleInfo item3 = new ScheduleInfo();
-        item3.schedule_event = "How to GIT all the ladies";
-        item3.time_location = "11:30 a.m. - 12:30 p.m. | Tigga Room";
-        mContentItems.add(item3);
-
-        ScheduleInfo item4 = new ScheduleInfo();
-        item4.schedule_event = "Building non-responsive sites";
-        item4.time_location = "1:00 p.m. - 1:45 p.m. | Vivek’s World";
-        mContentItems.add(item4);
+//        ScheduleInfo item1 = new ScheduleInfo();
+//        item1.schedule_event = "Badge Pickup";
+//        item1.time_location = "9:00 a.m. - 4:00 p.m | Reception Desk";
+//        mContentItems.add(item1);
+//
+//        ScheduleInfo item2 = new ScheduleInfo();
+//        item2.schedule_event = "Breakfast";
+//        item2.time_location = "9:30 a.m. - 10:45 a.m. | Main Lobby";
+//        mContentItems.add(item2);
+//
+//        ScheduleInfo item3 = new ScheduleInfo();
+//        item3.schedule_event = "How to GIT all the ladies";
+//        item3.time_location = "11:30 a.m. - 12:30 p.m. | Tigga Room";
+//        mContentItems.add(item3);
+//
+//        ScheduleInfo item4 = new ScheduleInfo();
+//        item4.schedule_event = "Building non-responsive sites";
+//        item4.time_location = "1:00 p.m. - 1:45 p.m. | Vivek’s World";
+//        mContentItems.add(item4);
 
         mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);

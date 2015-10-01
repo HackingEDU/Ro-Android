@@ -26,18 +26,13 @@ import co.hackingedu.ro.backend.BackendManager;
  * Created by florentchampigny on 24/04/15.
  */
 public class RecyclerViewFragment extends Fragment {
-
-    /**
-     * BackendManager to handle API Calls
-     */
-    private BackendManager backendManager;
-
     /**
      * JSONArray field to store response from backendManager
      */
     private JSONArray generalArray;
 
     /**
+     * Example output from JSOn endpoint
      * [{"_id":"55f66d217cf6bb4bbc4554a5",
      * "handle":"main",
      * "wifi":{"ssid":"HackingEDUwifi","pw":"yourFuckingMama"},
@@ -107,11 +102,23 @@ public class RecyclerViewFragment extends Fragment {
         return new RecyclerViewFragment();
     }
 
+    /**
+     * Creating the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
+    /**
+     * After view is created
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -122,23 +129,16 @@ public class RecyclerViewFragment extends Fragment {
 
         mAdapter = new RecyclerViewMaterialAdapter(new GeneralRecyclerViewAdapter(mContentItems));
 
+        // create static cards
+        for (int i = 0; i < ITEM_COUNT; ++i) {
+            GeneralInfo item = new GeneralInfo();
+            mContentItems.add(item);
+        }
 
-            for (int i = 0; i < ITEM_COUNT; ++i) {
-                GeneralInfo item = new GeneralInfo();
-                mContentItems.add(item);
-            }
+        // todo: create dynamic cards
 
         mAdapter.notifyDataSetChanged();
-
         mRecyclerView.setAdapter(mAdapter);
-
-
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
-
-
-
-
-
-
 }
