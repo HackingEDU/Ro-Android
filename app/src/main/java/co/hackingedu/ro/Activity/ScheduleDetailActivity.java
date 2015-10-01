@@ -60,19 +60,25 @@ public class ScheduleDetailActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
+        Log.i(TAG, "bundle: " + bundle.toString());
+
         // read extras
-        if(bundle!=null)
+        if(bundle != null)
         {
+
             // set event speaker name
             String eventSpeaker = (String) bundle.get(INTENT_EXTRA_SPEAKER_KEY);
+            Log.i(TAG, eventSpeaker);
             speakerName.setText(eventSpeaker);
 
             // set event speaker image
             String eventImage = (String) bundle.get(INTENT_EXTRA_IMAGE_KEY);
+            Log.i(TAG, eventImage);
             imageView.setImageBitmap(getBitmapFromURL(eventImage));
 
             // set event speaker description
             String eventAbout = (String) bundle.get(INTENT_EXTRA_ABOUT_KEY);
+            Log.i(TAG, eventAbout);
             eventDescript.setText(eventAbout);
         }
     }

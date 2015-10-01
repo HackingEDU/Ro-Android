@@ -82,10 +82,10 @@ public class MapViewFragment extends Fragment {
         super.onAttach(context);
 
         Log.i(TAG, "instantiating cacheManger");
-//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
 
+        // get array
         try {
             mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
         } catch (JSONException e) {

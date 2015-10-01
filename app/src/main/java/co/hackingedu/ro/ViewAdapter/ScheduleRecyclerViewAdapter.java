@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import co.hackingedu.ro.R;
 import co.hackingedu.ro.Activity.ScheduleDetailActivity;
 
 public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ScheduleViewHolder> {
+
+    private static final String TAG = "ScheduleRecyclerVA";
 
     /**
      * String for referencing Intent Extras
@@ -104,12 +107,22 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             //put Extra to save Data
             Intent i = new Intent(context, ScheduleDetailActivity.class);
             try {
-                i.putExtra(INTENT_EXTRA_SPEAKER_KEY,
-                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_SPEAKER_KEY));
-                i.putExtra(INTENT_EXTRA_IMAGE_KEY,
-                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_IMAGE_KEY));
-                i.putExtra(INTENT_EXTRA_ABOUT_KEY,
-                        (String) ((JSONObject) eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_ABOUT_KEY));
+                String speakerName = (String) ((JSONObject)
+                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_SPEAKER_KEY);
+
+                String speakerImage = (String) ((JSONObject)
+                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_IMAGE_KEY);
+
+                String speakerAbout = (String) ((JSONObject)
+                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_ABOUT_KEY);
+
+                Log.i(TAG, speakerName);
+                Log.i(TAG, speakerImage);
+                Log.i(TAG, speakerAbout);
+
+                i.putExtra(INTENT_EXTRA_SPEAKER_KEY, speakerName);
+                i.putExtra(INTENT_EXTRA_IMAGE_KEY, speakerImage);
+                i.putExtra(INTENT_EXTRA_ABOUT_KEY, speakerAbout);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

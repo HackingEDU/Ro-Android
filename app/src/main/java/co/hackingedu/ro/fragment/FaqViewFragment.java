@@ -81,6 +81,8 @@ public class FaqViewFragment extends Fragment {
         Log.i(TAG, "instantiating cacheManger");
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
+
+        // get array
         try {
             faqsArray = cacheManager.getJsonArray(cacheManager.FAQS_FILE, context);
         } catch (JSONException e) {

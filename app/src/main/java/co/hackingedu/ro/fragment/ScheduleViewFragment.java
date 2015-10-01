@@ -44,10 +44,8 @@ public class ScheduleViewFragment extends Fragment {
     private final String TAG = "ScheduleViewFragment";
 
     /**
-     * BackendManager to handle API Calls
+     * cacheManager to handle API Calls
      */
-    private BackendManager backendManager;
-
     private CacheManager cacheManager;
 
     /**
@@ -108,23 +106,10 @@ public class ScheduleViewFragment extends Fragment {
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
 
-        // pull from local storage for quick loading
+        // get array
         try {
-            if(cacheManager.fileIsNull(cacheManager.EVENTS_FILE)){
-                updateLater = false;
-                cacheManager.updateJsonFile(cacheManager.EVENTS_FILE);
-                Log.i(TAG, "updateLater status: " + updateLater);
-            } else {
-                // we need to update later!!!!
-                updateLater = true;
-                Log.i(TAG, "updateLater status: " + updateLater);
-            }
             eventArray = cacheManager.getJsonArray(cacheManager.EVENTS_FILE, context);
         } catch (JSONException e) {
-            Log.i(TAG, "JSON Exception: onCreateView 2");
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i(TAG, "IO Exception: onCreateView 2");
             e.printStackTrace();
         }
     }
