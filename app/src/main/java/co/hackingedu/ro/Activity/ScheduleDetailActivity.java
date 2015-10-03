@@ -56,13 +56,6 @@ public class ScheduleDetailActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //trying to get the getExtra data and set it to textView
-        TextView speakerName = (TextView)findViewById(R.id.speaker_name);
-
-        ImageView imageView = (ImageView) findViewById(R.id.speaker_image);
-
-        TextView eventDescript = (TextView) findViewById(R.id.description);
-
         // retrieve previous intent
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -70,6 +63,10 @@ public class ScheduleDetailActivity extends Activity {
         // read extras
         if(bundle != null)
         {
+            // get views
+            TextView speakerName = (TextView)findViewById(R.id.speaker_name);
+            ImageView imageView = (ImageView) findViewById(R.id.speaker_image);
+            TextView eventDescript = (TextView) findViewById(R.id.description);
 
             // set event speaker name
             String eventSpeaker = (String) bundle.get(INTENT_EXTRA_SPEAKER_KEY);
@@ -78,7 +75,7 @@ public class ScheduleDetailActivity extends Activity {
 
             // set event speaker image
             String eventImage = (String) bundle.get(INTENT_EXTRA_IMAGE_KEY);
-            Log.i(TAG, eventImage);
+            Log.i(TAG, "eventImage: " + eventImage);
             imageView.setImageBitmap(getBitmapFromURL(eventImage));
 
             // set event speaker description

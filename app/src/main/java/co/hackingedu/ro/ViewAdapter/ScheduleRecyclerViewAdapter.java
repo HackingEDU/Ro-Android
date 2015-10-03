@@ -29,17 +29,21 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_SPEAKER_KEY = "name";
+    private static String INTENT_EXTRA_SPEAKER_KEY = "event_name";
 
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_IMAGE_KEY = "image";
+    private static String INTENT_EXTRA_IMAGE_KEY = "event_image";
 
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_ABOUT_KEY = "about";
+    private static String INTENT_EXTRA_ABOUT_KEY = "event_about";
+
+    private static String JSON_NAME_KEY = "name";
+    private static String JSON_IMAGE_KEY = "image";
+    private static String JSON_ABOUT_KEY = "about";
 
     private List<ScheduleInfo> scheduleInfoList;
     static final int TYPE_SCHEDULE = 0;
@@ -109,13 +113,13 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             Intent i = new Intent(context, ScheduleDetailActivity.class);
             try {
                 String speakerName = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_SPEAKER_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_NAME_KEY);
 
                 String speakerImage = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_IMAGE_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_IMAGE_KEY);
 
                 String speakerAbout = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_ABOUT_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_ABOUT_KEY);
 
                 Log.i(TAG, speakerName);
                 Log.i(TAG, speakerImage);

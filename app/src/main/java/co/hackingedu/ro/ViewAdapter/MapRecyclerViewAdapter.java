@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import co.hackingedu.ro.Activity.MapDetailActivity;
+import co.hackingedu.ro.Activity.MapViewImageActivity;
 import co.hackingedu.ro.Activity.ScheduleDetailActivity;
 import co.hackingedu.ro.Info.MapInfo;
 import co.hackingedu.ro.R;
@@ -33,9 +34,9 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
     /**
      *
      */
-    private static final String INTENT_EXTRA_MAP_KEY = "map";
+    private static final String INTENT_EXTRA_MAP_KEY = "map_map";
 
-    private static final String INTENT_EXTRA_IMAGE_KEY = "img";
+    private static final String INTENT_EXTRA_IMAGE_KEY = "map_img";
 
     List<MapInfo> mapInfoList;
 
@@ -102,7 +103,7 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
             Log.i(TAG, "onclick");
             //you can use get adapter position to get the position of the recycler item
             //put Extra to save Data
-            Intent i = new Intent(context, MapDetailActivity.class);
+            Intent i = new Intent(context, MapViewImageActivity.class);
             try {
 
                 String mapImage = (String) ((JSONObject)

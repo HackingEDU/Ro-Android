@@ -43,7 +43,7 @@ public class MapViewFragment extends Fragment {
     private final String TAG = "MapViewFragment";
 
     /**
-     * cacheManager to handle calls to localStorage
+     * BackendManager to handle API Calls
      */
     private CacheManager cacheManager;
 
@@ -73,43 +73,67 @@ public class MapViewFragment extends Fragment {
         return new MapViewFragment();
     }
 
-    /**
-     * on attach fragment
-     * @param context
-     */
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
 
         Log.i(TAG, "instantiating cacheManger");
+//            cacheManager = new CacheManager(cacheManager.FAQS_FILE, context);
         cacheManager = new CacheManager(PreferenceManager.getDefaultSharedPreferences(context));
         Log.i(TAG, "cacheManager success");
 
-        // get array
         try {
             mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // pull from local storage for quick loading
+//        try {
+//            if(cacheManager.fileIsNull(cacheManager.MAPS_FILE)){
+//                updateLater = false;
+//                cacheManager.updateJsonFile(cacheManager.MAPS_FILE);
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            } else {
+//                // we need to update later!!!!
+//                updateLater = true;
+//                Log.i(TAG, "updateLater status: " + updateLater);
+//            }
+//            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, context);
+//        } catch (JSONException e) {
+//            Log.i(TAG, "JSON Exception: onCreateView 2");
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.i(TAG, "IO Exception: onCreateView 2");
+//            e.printStackTrace();
+//        }
     }
 
-    /**
-     * On Create View handler
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // instantiate backendManager to begin api calls!
+//        backendManager = new BackendManager();
+
+        // instantiate cache manager and try to update the Maps JSON File
+//        cacheManager = new CacheManager(inflater.getContext().getSharedPreferences("HackingEDU_Data", Context.MODE_PRIVATE));
+//        try {
+//            cacheManager = new CacheManager(cacheManager.MAPS_FILE, inflater.getContext());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        // pull from local storage for quick loading
+//        try {
+//            mapsArray = cacheManager.getJsonArray(cacheManager.MAPS_FILE, inflater.getContext());
+//            Log.i(TAG, "mapsArray success");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
     }
 
-    /**
-     * After View is created handler
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -119,6 +143,15 @@ public class MapViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mAdapter = new RecyclerViewMaterialAdapter(new MapRecyclerViewAdapter(mContentItems, mapsArray));
+
+        // save local copy of JSON arrays from backend Manager
+//        try {
+//            mapsArray = (JSONArray) backendManager.get(backendManager.MAPS_ENDPOINT);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         // loop through each map in JSON Array and do frontend stuff!
         for (int i = 0; i < mapsArray.length(); i++)
@@ -133,7 +166,7 @@ public class MapViewFragment extends Fragment {
             mContentItems.add(item);
         }
 
-        // add static cards
+        // static cards
 //        MapInfo item1 = new MapInfo();
 //        item1.map_text = "Map 1";
 //        mContentItems.add(item1);
@@ -146,8 +179,11 @@ public class MapViewFragment extends Fragment {
 //        item3.map_text = "Map 3";
 //        mContentItems.add(item3);
 
+
         mAdapter.notifyDataSetChanged();
+
         mRecyclerView.setAdapter(mAdapter);
+
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
 }
