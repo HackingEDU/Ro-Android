@@ -20,22 +20,29 @@ import java.net.URL;
 import co.hackingedu.ro.R;
 
 public class ScheduleDetailActivity extends Activity {
+    /**
+     * Debugging Tag
+     */
     private static String TAG = "ScheduleDetailActivity";
 
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_SPEAKER_KEY = "name";
+    private static String INTENT_EXTRA_SPEAKER_KEY = "event_name";
 
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_IMAGE_KEY = "image";
+    private static String INTENT_EXTRA_IMAGE_KEY = "event_image";
 
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_ABOUT_KEY = "about";
+    private static String INTENT_EXTRA_ABOUT_KEY = "event_about";
+
+    private static String JSON_NAME_KEY = "name";
+    private static String JSON_IMAGE_KEY = "image";
+    private static String JSON_ABOUT_KEY = "about";
 
     /**
      * onCreate handler
@@ -60,15 +67,13 @@ public class ScheduleDetailActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-//        Log.i(TAG, "bundle: " + bundle.toString());
-
         // read extras
         if(bundle != null)
         {
 
             // set event speaker name
             String eventSpeaker = (String) bundle.get(INTENT_EXTRA_SPEAKER_KEY);
-            Log.i(TAG, eventSpeaker);
+            Log.i(TAG, "eventSpeaker: " + eventSpeaker);
             speakerName.setText(eventSpeaker);
 
             // set event speaker image
@@ -113,6 +118,11 @@ public class ScheduleDetailActivity extends Activity {
         }
     }
 
+    /**
+     * Helper method to get Bitmap from URL
+     * @param src
+     * @return
+     */
     public static Bitmap getBitmapFromURL(String src) {
         try {
             Log.e(TAG, "src: " + src);

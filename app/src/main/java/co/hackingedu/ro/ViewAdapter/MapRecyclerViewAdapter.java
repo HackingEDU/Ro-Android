@@ -8,27 +8,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
+import co.hackingedu.ro.Activity.MapDetailActivity;
+import co.hackingedu.ro.Activity.ScheduleDetailActivity;
 import co.hackingedu.ro.Info.MapInfo;
-import co.hackingedu.ro.Activity.MapViewImageActivity;
 import co.hackingedu.ro.R;
 
 public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerViewAdapter.MapViewHolder> {
+    private static final String TAG = "MapRecyclerViewAdapter";
+    private static JSONArray mapArray;
+
+    /**
+     *
+     */
+    private static final String INTENT_EXTRA_MAP_KEY = "map";
+
+    private static final String INTENT_EXTRA_IMAGE_KEY = "img";
 
     List<MapInfo> mapInfoList;
 
     static final int TYPE_MAP = 0;
 
 
-    public MapRecyclerViewAdapter(List<MapInfo> mapInfoList) {
-        this.mapInfoList = mapInfoList;
+    public MapRecyclerViewAdapter(List<MapInfo> _mapInfoList, JSONArray _mapArray) {
+        mapArray = _mapArray;
+        mapInfoList = _mapInfoList;
     }
 
     @Override
@@ -62,12 +78,10 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
     }
 
     public static class MapViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView map_num;
         public ImageView map_image;
         public CardView map_card_view;
         private final Context context;
-
 
         public MapViewHolder(View v) {
             super(v);
@@ -85,9 +99,27 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
          */
         @Override
         public void onClick(View v) {
-            final Intent intent;
-            intent =  new Intent(context, MapViewImageActivity.class);
-            context.startActivity(intent);
+            Log.i(TAG, "onclick");
+            //you can use get adapter position to get the position of the recycler item
+            //put Extra to save Data
+            Intent i = new Intent(context, MapDetailActivity.class);
+            try {
+
+                String mapImage = (String) ((JSONObject)
+                        mapArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_IMAGE_KEY);
+
+                String mapMap = (String) ((JSONObject)
+                        mapArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_MAP_KEY);
+
+                Log.i(TAG, mapImage);
+                Log.i(TAG, mapMap);
+
+                i.putExtra(INTENT_EXTRA_IMAGE_KEY, mapImage);
+                i.putExtra(INTENT_EXTRA_MAP_KEY, mapMap);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            context.startActivity(i);
         }
     }
 

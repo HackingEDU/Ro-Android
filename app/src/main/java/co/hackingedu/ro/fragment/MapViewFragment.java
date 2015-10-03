@@ -118,7 +118,7 @@ public class MapViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new MapRecyclerViewAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new MapRecyclerViewAdapter(mContentItems, mapsArray));
 
         // loop through each map in JSON Array and do frontend stuff!
         for (int i = 0; i < mapsArray.length(); i++)
