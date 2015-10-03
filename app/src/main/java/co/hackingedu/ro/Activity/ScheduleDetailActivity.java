@@ -25,7 +25,7 @@ public class ScheduleDetailActivity extends Activity {
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_SPEAKER_KEY = "speaker";
+    private static String INTENT_EXTRA_SPEAKER_KEY = "name";
 
     /**
      * String for referencing Intent Extras
@@ -60,7 +60,7 @@ public class ScheduleDetailActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        Log.i(TAG, "bundle: " + bundle.toString());
+//        Log.i(TAG, "bundle: " + bundle.toString());
 
         // read extras
         if(bundle != null)

@@ -29,7 +29,7 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
     /**
      * String for referencing Intent Extras
      */
-    private static String INTENT_EXTRA_SPEAKER_KEY = "speaker";
+    private static String INTENT_EXTRA_SPEAKER_KEY = "name";
 
     /**
      * String for referencing Intent Extras
@@ -103,18 +103,19 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
 
         @Override
         public void onClick(View v) {
+            Log.i(TAG, "onclick");
             //you can use get adapter position to get the position of the recycler item
             //put Extra to save Data
             Intent i = new Intent(context, ScheduleDetailActivity.class);
             try {
                 String speakerName = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_SPEAKER_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_SPEAKER_KEY);
 
                 String speakerImage = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_IMAGE_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_IMAGE_KEY);
 
                 String speakerAbout = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition())).get(INTENT_EXTRA_ABOUT_KEY);
+                        eventArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_ABOUT_KEY);
 
                 Log.i(TAG, speakerName);
                 Log.i(TAG, speakerImage);
