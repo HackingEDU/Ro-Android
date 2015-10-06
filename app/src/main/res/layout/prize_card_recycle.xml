@@ -18,15 +18,15 @@
         android:layout_gravity="right|center_vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:id="@+id/sponsor_image"
             android:src="@drawable/prize"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
             android:adjustViewBounds="true"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
             android:scaleType="fitCenter" />
 
         <co.hackingedu.ro.style.LatoTextView

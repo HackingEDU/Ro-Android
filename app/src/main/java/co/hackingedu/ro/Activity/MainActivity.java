@@ -1,7 +1,5 @@
 package co.hackingedu.ro.Activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,14 +9,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
 
 import org.json.JSONException;
 
@@ -186,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 actionBar.setDisplayShowTitleEnabled(true);
                 actionBar.setDisplayUseLogoEnabled(false);
                 actionBar.setHomeButtonEnabled(true);
+
             }
         }
 
@@ -267,7 +266,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_camera)
+        {
+            //open camera
+            Intent i = new Intent(this, Camera.class);
+            startActivity(i);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

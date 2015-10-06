@@ -60,10 +60,11 @@ public class PrizeActivity extends Activity {
 
         populateCards();
 
-//        PrizeInfo item1 = new PrizeInfo();
-//        item1.prize_name = "Macbook air";
-//        item1.prize_description = "200 GB";
-//        mContentItems.add(item1);
+        PrizeInfo item1 = new PrizeInfo();
+        item1.prize_name = "Macbook air";
+        item1.sponsor_image = getResources().getDrawable(R.drawable.rohit);
+        item1.prize_description = "200 GB";
+        mContentItems.add(item1);
 //
 //        PrizeInfo item2 = new PrizeInfo();
 //        item2.prize_name = "Macbook air";

@@ -76,7 +76,7 @@ public class ScheduleDetailActivity extends Activity {
             // set event speaker image
             String eventImage = (String) bundle.get(INTENT_EXTRA_IMAGE_KEY);
             Log.i(TAG, "eventImage: " + eventImage);
-            imageView.setImageBitmap(getBitmapFromURL(eventImage));
+            imageView.setImageBitmap(getBitmapFromURL("http://thesource.com/wp-content/uploads/2015/04/Drake.jpg"));
 
             // set event speaker description
             String eventAbout = (String) bundle.get(INTENT_EXTRA_ABOUT_KEY);

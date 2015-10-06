@@ -162,10 +162,9 @@ public class CacheManager {
      * @throws JSONException whenever there is an issue with String-JSON conversion
      */
     public JSONArray getJsonArray(String JsonFile, Context _context) throws JSONException {
-//        if(getJsonString(JsonFile, _context) == null){
-//            // handle this issue!
-//            return null;
-//        }
+        if(getJsonString(JsonFile, _context) == null){
+            return null;
+        }
         return new JSONArray(getJsonString(JsonFile, _context));
     }
 
