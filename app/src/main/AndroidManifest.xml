@@ -51,7 +51,7 @@
         </activity>
 
         <activity
-            android:name=".Activity.Camera"
+            android:name=".Activity.CameraActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden">
         </activity>

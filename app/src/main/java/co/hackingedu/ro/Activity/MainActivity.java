@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_camera)
         {
             //open camera
-            Intent i = new Intent(this, Camera.class);
+            Intent i = new Intent(this, CameraActivity.class);
             startActivity(i);
         }
 
