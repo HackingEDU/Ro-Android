@@ -40,6 +40,11 @@ public class App extends Application {
      */
     private final String PARSE_CLIENT_KEY = "j9yKLdSIcXEO8w53Aiz8VwKanWqgmlWXwsb92Cfo";
 
+    /**
+     * Static context to use later in MapViewImageActivity and other static environments
+     */
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,5 +58,15 @@ public class App extends Application {
         // Parse app!
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        context = getApplicationContext();
+    }
+
+    /**
+     * Getter method for getting static context
+     * @return application context in static environment
+     */
+    public static Context getAppContext() {
+        return App.context;
     }
 }
