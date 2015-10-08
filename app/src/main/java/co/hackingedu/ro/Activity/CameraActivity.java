@@ -46,12 +46,15 @@ import java.util.Date;
 import co.hackingedu.ro.R;
 
 public class CameraActivity extends Activity implements SurfaceHolder.Callback{
+    /**
+     * Logging tag
+     */
     private static String TAG = "CameraActivity";
 
+    /**
+     * static context to use later!
+     */
     private static Context context;
-
-    private static int RESULT_LOAD_IMG = 1;
-    String imgDecodableString;
 
     Camera camera;
     SurfaceView surfaceView;
@@ -84,9 +87,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
             public void failure(final TwitterException e) {
                 // Do something on fail
                 // try logging in again!!
+                // or not?
             }
         });
 
+        // set up surfaceView
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView)findViewById(R.id.camerapreview);
         surfaceHolder = surfaceView.getHolder();
@@ -100,6 +105,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                 LayoutParams.FILL_PARENT);
         this.addContentView(viewControl, layoutParamsControl);
 
+        // TODO: takepicture lol
         Button capture = (Button) findViewById(R.id.takepicture);
         capture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -120,7 +126,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             // TODO Auto-generated method stub
-
         }};
 
     PictureCallback myPictureCallback_JPG = new PictureCallback(){
@@ -145,13 +150,14 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            // save image
             bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, out);
 
             // start Tweet Composer
             Intent intent = null;
             intent = new TweetComposer.Builder(context)
-                    .text("Taken at #HackingEDU!")
-//                        .url(new URL("http://hackingedu.co"))
+                    .text("Inventing the future at #HackingEDU!!!")
+//                    .url(new URL("http://hackingedu.co"))
                     .image(Uri.fromFile(newFile))
                     .createIntent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
