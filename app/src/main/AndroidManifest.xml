@@ -79,6 +79,9 @@
         </receiver>
         <meta-data android:name="com.parse.push.notification_icon"
             android:resource="@drawable/logo_white"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="39e45652cecb03ae54de54f6e6b5e8b8d804caf2" />
     </application>
 
 </manifest>
