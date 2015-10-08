@@ -17,6 +17,12 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -39,11 +45,24 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         setContentView(R.layout.camera_watermark);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        TwitterAuthClient twitterAuthClient = new TwitterAuthClient();
+        twitterAuthClient.authorize(this, new Callback<TwitterSession>() {
+            @Override
+            public void success(final Result<TwitterSession> result) {
+                final TwitterSession sessionData = result.data;
+                // Do something with the returned TwitterSession (contains the user token and secret)
+
+            }
+
+            @Override
+            public void failure(final TwitterException e) {
+                // Do something on fail
+            }
+        });
 
         final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
         File newdir = new File(dir);
         newdir.mkdirs();
-
 
 
         getWindow().setFormat(PixelFormat.UNKNOWN);
