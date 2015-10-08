@@ -1,14 +1,17 @@
 package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,6 +25,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import java.io.File;
 import java.io.IOException;
 
 import co.hackingedu.ro.R;
@@ -33,6 +37,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     SurfaceHolder surfaceHolder;
     boolean previewing = false;
     LayoutInflater controlInflater = null;
+    int TAKE_PHOTO_CODE = 0;
+    public static int count=0;
 
     /** Called when the activity is first created. */
     @Override
@@ -56,6 +62,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
             }
         });
 
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+        File newdir = new File(dir);
+        newdir.mkdirs();
+
+
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView)findViewById(R.id.camerapreview);
         surfaceHolder = surfaceView.getHolder();
@@ -69,14 +80,16 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                 LayoutParams.FILL_PARENT);
         this.addContentView(viewControl, layoutParamsControl);
 
-        /*Button buttonTakePicture = (Button)findViewById(R.id.takepicture);
-        buttonTakePicture.setOnClickListener(new Button.OnClickListener(){
+        Button capture = (Button) findViewById(R.id.takepicture);
+        capture.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-            @Override
-            public void onClick(View arg0) {
                 camera.takePicture(myShutterCallback,
                         myPictureCallback_RAW, myPictureCallback_JPG);
-            }});*/
+            }
+        });
+
+
     }
 
     ShutterCallback myShutterCallback = new ShutterCallback(){

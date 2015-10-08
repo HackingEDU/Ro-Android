@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="Wifi: San Mateo Event Center"
+        android:text="Wifi: HackingEDU"
         android:textColor="#000000"
         android:id="@+id/wifi_name"
         android:layout_gravity="center" android:layout_marginBottom="10dp"/>
@@ -43,7 +43,7 @@
         <co.hackingedu.ro.style.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password: realwifi123"
+        android:text="Password: inventthefuture"
         android:textColor="#000000"
         android:id="@+id/password"
         android:layout_gravity="center_horizontal|bottom"

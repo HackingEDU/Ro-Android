@@ -5,13 +5,15 @@
     android:layout_height="fill_parent"
     android:gravity="bottom">
 
-    <!--<Button
+    <Button
         android:id="@+id/takepicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Take Picture"
-        android:layout_gravity="right"
-        android:layout_margin="10px" />-->
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
+
+
 
 
     <ImageView
