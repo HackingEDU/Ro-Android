@@ -2,6 +2,7 @@
 <resources>
 
     <color name="blue">#303F9F</color>
+    <color name="gray">#4d4d4d</color>
 
     <color name="accent_color">@color/blue</color>
     <color name="colorPrimary">@color/blue</color>

@@ -3,6 +3,7 @@ package co.hackingedu.ro.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -33,9 +35,13 @@ import com.twitter.sdk.android.core.models.Media;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import co.hackingedu.ro.R;
 
@@ -65,25 +71,21 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         setContentView(R.layout.camera_watermark);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        // login to Twitter
         TwitterAuthClient twitterAuthClient = new TwitterAuthClient();
         twitterAuthClient.authorize(this, new Callback<TwitterSession>() {
             @Override
             public void success(final Result<TwitterSession> result) {
                 final TwitterSession sessionData = result.data;
                 // Do something with the returned TwitterSession (contains the user token and secret)
-
             }
 
             @Override
             public void failure(final TwitterException e) {
                 // Do something on fail
+                // try logging in again!!
             }
         });
-
-        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-        File newdir = new File(dir);
-        newdir.mkdirs();
-
 
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView)findViewById(R.id.camerapreview);
@@ -101,17 +103,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         Button capture = (Button) findViewById(R.id.takepicture);
         capture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 camera.takePicture(myShutterCallback,
                         myPictureCallback_RAW, myPictureCallback_JPG);
             }
         });
-
-
     }
 
     ShutterCallback myShutterCallback = new ShutterCallback(){
-
         @Override
         public void onShutter() {
             // TODO Auto-generated method stub
@@ -119,7 +117,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         }};
 
     PictureCallback myPictureCallback_RAW = new PictureCallback(){
-
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             // TODO Auto-generated method stub
@@ -135,24 +132,28 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
             Log.i(TAG, "byte count: " + bitmapPicture.getByteCount());
 
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmapPicture, "HackingEDU", "#HackingEDU");
+            // DCIM public directory
+            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath();
+            File outputDir = new File(path);
+            outputDir.mkdirs();
 
-            File imageFile = new File(path);
-            Uri imageUri = Uri.fromFile(imageFile);
-
-            Intent intent = null;
+            // create image in directory
+            File newFile = new File(path + "/" + "HackingEDU.png");
+            FileOutputStream out = null;
             try {
-                if(getApplicationContext() == null) {
-                    Log.i(TAG, "APPLICATION CONTEXT IS NULL");
-                }
-                intent = new TweetComposer.Builder(context)
-                        .text("Taken at #HackingEDU!")
-                        .url(new URL("http://hackingedu.co"))
-                        .image(imageUri)
-                        .createIntent();
-            } catch (MalformedURLException e) {
+                out = new FileOutputStream(newFile);
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+            // start Tweet Composer
+            Intent intent = null;
+            intent = new TweetComposer.Builder(context)
+                    .text("Taken at #HackingEDU!")
+//                        .url(new URL("http://hackingedu.co"))
+                    .image(Uri.fromFile(newFile))
+                    .createIntent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }};
