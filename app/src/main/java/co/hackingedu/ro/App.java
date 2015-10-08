@@ -17,30 +17,41 @@ import io.fabric.sdk.android.Fabric;
  */
 public class App extends Application {
 
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    // TODO: obfuscating these keys so decompilers can't find them
+    /**
+     * Twitter App Key
+     * Uses Joseph Zhong's Fabric app as of 6 Oct. 2015
+     */
     private static final String TWITTER_KEY = "cvTR90KaXdMgiN2rGFLO54iMQ";
+
+    /**
+     * Twitter App Key
+     */
     private static final String TWITTER_SECRET = "H4Yu2JDJU2963Cos4ujelsKfRjo1qlb3FwJNgonZW4oUhfqsWC";
 
-
-    private static Context context;
-
+    /**
+     * Parse App ID
+     * USES Max's app as of about a week ago from 6 Oct. 2015
+     */
     private final String PARSE_APP_ID = "6iCemurReQldHcZGy9SgMjMKpIM1SVb91lzD8sKi";
 
+    /**
+     * Parse Client Key
+     */
     private final String PARSE_CLIENT_KEY = "j9yKLdSIcXEO8w53Aiz8VwKanWqgmlWXwsb92Cfo";
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        // configures twitter app
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+
+        // leverages Fabric to authenticate TwitterKit, Core and Composer
         Fabric.with(this, new Twitter(authConfig), new TwitterCore(authConfig), new TweetComposer());
 
+        // Parse app!
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
-        context = getApplicationContext();
-    }
-
-    public static Context getAppContext() {
-        return App.context;
     }
 }
