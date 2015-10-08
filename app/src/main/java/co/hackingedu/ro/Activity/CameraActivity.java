@@ -1,17 +1,15 @@
 package co.hackingedu.ro.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -67,6 +65,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
 
                 camera.takePicture(myShutterCallback,
                         myPictureCallback_RAW, myPictureCallback_JPG);
+
             }
         });
 

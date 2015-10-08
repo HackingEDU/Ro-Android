@@ -112,14 +112,14 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             //put Extra to save Data
             Intent i = new Intent(context, ScheduleDetailActivity.class);
             try {
-                String speakerName = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(JSON_NAME_KEY);
+                String speakerName =  ((JSONObject)
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_NAME_KEY).toString();
 
-                String speakerImage = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(JSON_IMAGE_KEY);
+                String speakerImage =  ((JSONObject)
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_IMAGE_KEY).toString();
 
-                String speakerAbout = (String) ((JSONObject)
-                        eventArray.get(getAdapterPosition()-1)).get(JSON_ABOUT_KEY);
+                String speakerAbout =  ((JSONObject)
+                        eventArray.get(getAdapterPosition()-1)).get(JSON_ABOUT_KEY).toString();
 
                 Log.i(TAG, speakerName);
                 Log.i(TAG, speakerImage);
