@@ -7,6 +7,9 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -30,7 +33,7 @@ public class App extends Application {
         super.onCreate();
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+        Fabric.with(this, new Twitter(authConfig), new TwitterCore(authConfig), new TweetComposer());
 
         Parse.initialize(this, PARSE_APP_ID, PARSE_CLIENT_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
