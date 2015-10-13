@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -12,14 +12,13 @@ import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -32,6 +31,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import co.hackingedu.ro.R;
 
@@ -48,6 +48,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
 
     Camera camera;
     SurfaceView surfaceView;
+    LinearLayout Camera_Watermark;
     SurfaceHolder surfaceHolder;
     boolean previewing = false;
     LayoutInflater controlInflater = null;
@@ -62,6 +63,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         context = getApplicationContext();
 
         setContentView(R.layout.camera_watermark);
+
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // login to Twitter
@@ -99,8 +101,41 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         ImageView capture = (ImageView) findViewById(R.id.takepicture);
         capture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                camera.takePicture(myShutterCallback,
-                        myPictureCallback_RAW, myPictureCallback_JPG);
+                Date now = new Date();
+                android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+                    // image naming and path  to include sd card  appending name you choose for file
+                    String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+                    // create bitmap screen capture
+
+                    //joseph I need some help, the bitmap is always black :( 
+                    Bitmap bitmap;
+                    surfaceView.setDrawingCacheEnabled(true);
+                    bitmap = Bitmap.createBitmap(surfaceView.getDrawingCache());
+                    surfaceView.setDrawingCacheEnabled(false);
+
+                    File imageFile = new File(mPath);
+
+                FileOutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(imageFile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                int quality = 100;
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+
+
+                // start Tweet Composer
+                Intent intent = null;
+                intent = new TweetComposer.Builder(context)
+                        .text("Inventing the future at #HackingEDU!!!")
+//                    .url(new URL("http://hackingedu.co"))
+                        .image(Uri.fromFile(imageFile))
+                        .createIntent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
@@ -118,41 +153,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
             // TODO Auto-generated method stub
         }};
 
-    PictureCallback myPictureCallback_JPG = new PictureCallback(){
 
-        @Override
-        public void onPictureTaken(byte[] arg0, Camera arg1) {
-            // TODO Auto-generated method stub
-            Bitmap bitmapPicture
-                    = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-            Log.i(TAG, "byte count: " + bitmapPicture.getByteCount());
 
-            // DCIM public directory
-            String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath();
-            File outputDir = new File(path);
-            outputDir.mkdirs();
-
-            // create image in directory
-            File newFile = new File(path + "/" + "HackingEDU.png");
-            FileOutputStream out = null;
-            try {
-                out = new FileOutputStream(newFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            // save image
-            bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-            // start Tweet Composer
-            Intent intent = null;
-            intent = new TweetComposer.Builder(context)
-                    .text("Inventing the future at #HackingEDU!!!")
-//                    .url(new URL("http://hackingedu.co"))
-                    .image(Uri.fromFile(newFile))
-                    .createIntent();
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }};
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
