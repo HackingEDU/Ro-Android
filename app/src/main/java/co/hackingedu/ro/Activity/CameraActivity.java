@@ -109,7 +109,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
 
                     // create bitmap screen capture
 
-                    //joseph I need some help, the bitmap is always black :( 
+                    //joseph I need some help, the bitmap is always black :(
                     Bitmap bitmap;
                     surfaceView.setDrawingCacheEnabled(true);
                     bitmap = Bitmap.createBitmap(surfaceView.getDrawingCache());
