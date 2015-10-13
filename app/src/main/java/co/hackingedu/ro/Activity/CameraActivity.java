@@ -3,8 +3,6 @@ package co.hackingedu.ro.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -14,34 +12,26 @@ import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-import com.twitter.sdk.android.core.models.Media;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import co.hackingedu.ro.R;
 
@@ -106,7 +96,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         this.addContentView(viewControl, layoutParamsControl);
 
         // TODO: takepicture lol
-        Button capture = (Button) findViewById(R.id.takepicture);
+        ImageView capture = (ImageView) findViewById(R.id.takepicture);
         capture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 camera.takePicture(myShutterCallback,
@@ -199,5 +189,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         camera.release();
         camera = null;
         previewing = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
