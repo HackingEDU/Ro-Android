@@ -10,6 +10,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
+import android.opengl.GLException;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -31,7 +32,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.IntBuffer;
 import java.util.Date;
+
+import javax.microedition.khronos.opengles.GL10;
 
 import co.hackingedu.ro.R;
 
@@ -63,7 +67,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         context = getApplicationContext();
 
         setContentView(R.layout.camera_watermark);
-
+        Camera_Watermark = (LinearLayout) findViewById(R.id.camera_layout);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         // login to Twitter
@@ -104,28 +108,61 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                 Date now = new Date();
                 android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
-                    // image naming and path  to include sd card  appending name you choose for file
-                    String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+                // image naming and path  to include sd card  appending name you choose for file
+                String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
 
-                    // create bitmap screen capture
+                // create bitmap screen capture
 
-                    //joseph I need some help, the bitmap is always black :(
-                    Bitmap bitmap;
-                    surfaceView.setDrawingCacheEnabled(true);
-                    bitmap = Bitmap.createBitmap(surfaceView.getDrawingCache());
-                    surfaceView.setDrawingCacheEnabled(false);
+                //joseph I need some help, the bitmap is always black :(
+                Bitmap bitmap;
 
-                    File imageFile = new File(mPath);
+//                View rootView = findViewById(R.id.camerapreview).getRootView();
+//                rootView.setDrawingCacheEnabled(true);
+//                bitmap = Bitmap.createBitmap(rootView.getDrawingCache());
+//                rootView.setDrawingCacheEnabled(false);
+
+//                surfaceView.setDrawingCacheEnabled(true);
+//                bitmap = Bitmap.createBitmap(surfaceView.getDrawingCache());
+//                surfaceView.setDrawingCacheEnabled(false);
+
+//                Camera_Watermark.setDrawingCacheEnabled(true);
+//                Camera_Watermark.buildDrawingCache(true);
+//                bitmap = Bitmap.createBitmap(Camera_Watermark.getDrawingCache());
+//                Camera_Watermark.setDrawingCacheEnabled(false);
+
+//                View rootView = getWindow().getDecorView().getRootView();
+//                rootView.setDrawingCacheEnabled(true);
+//                bitmap = Bitmap.createBitmap(rootView.getDrawingCache());
+//                rootView.setDrawingCacheEnabled(false);
+
+//                View rootView = getWindow().getDecorView().getRootView();
+
+//                bitmap = screenShot(surfaceView);
+//                CameraActivity.SavePixels(0, 0, surfaceView.getWidth(), surfaceView.getHeight(), surfaceView.)
+
+                Bitmap newBitmap = Bitmap.createBitmap(surfaceView.getWidth(),
+                        surfaceView.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(newBitmap);
+                surfaceView.draw(canvas);
+
+
+
+                File imageFile = new File(mPath);
 
                 FileOutputStream outputStream = null;
                 try {
                     outputStream = new FileOutputStream(imageFile);
+                    int quality = 100;
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                int quality = 100;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
 
+//                try {
+//                    Runtime.getRuntime().exec("screencap -p " + mPath);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 // start Tweet Composer
                 Intent intent = null;
@@ -140,6 +177,39 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         });
     }
 
+    public Canvas screenShot(SurfaceView view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),
+                view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return canvas;
+    }
+
+    public static Bitmap SavePixels(int x, int y, int w, int h, GL10 gl)
+    {
+        int b[]=new int[w*(y+h)];
+        int bt[]=new int[w*h];
+        IntBuffer ib=IntBuffer.wrap(b);
+        ib.position(0);
+        gl.glReadPixels(x, 0, w, y+h, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE, ib);
+
+        for(int i=0, k=0; i<h; i++, k++)
+        {//remember, that OpenGL bitmap is incompatible with Android bitmap
+            //and so, some correction need.
+            for(int j=0; j<w; j++)
+            {
+                int pix=b[i*w+j];
+                int pb=(pix>>16)&0xff;
+                int pr=(pix<<16)&0x00ff0000;
+                int pix1=(pix&0xff00ff00) | pr | pb;
+                bt[(h-k-1)*w+j]=pix1;
+            }
+        }
+
+        Bitmap sb = Bitmap.createBitmap(bt, w, h, Bitmap.Config.ARGB_8888);
+        return sb;
+    }
+
     ShutterCallback myShutterCallback = new ShutterCallback(){
         @Override
         public void onShutter() {
@@ -152,9 +222,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             // TODO Auto-generated method stub
         }};
-
-
-
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
