@@ -101,7 +101,6 @@ public class ScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ScheduleRe
             time_location = (TextView) v.findViewById(R.id.time_location);
             schedule_card_view = (CardView) v.findViewById(R.id.schedule_card_view);
             context = v.getContext();
-
             schedule_card_view.setOnClickListener(this);
         }
 

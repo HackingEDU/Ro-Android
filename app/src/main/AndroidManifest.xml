@@ -49,6 +49,10 @@
             android:name=".Activity.SponsorActivity"
             android:theme="@style/WithBar">
         </activity>
+        <activity
+            android:name=".Activity.ShuttleActivity"
+            android:theme="@style/WithBar">
+        </activity>
 
         <activity
             android:name=".Activity.CameraActivity"

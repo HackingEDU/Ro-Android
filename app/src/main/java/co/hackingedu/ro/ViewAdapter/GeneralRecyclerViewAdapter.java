@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.hackingedu.ro.Activity.PrizeActivity;
+import co.hackingedu.ro.Activity.ShuttleActivity;
 import co.hackingedu.ro.Activity.SponsorActivity;
 import co.hackingedu.ro.Info.GeneralInfo;
 import co.hackingedu.ro.R;
@@ -26,6 +27,7 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
     static final int TYPE_PROJECT = 1;
     static final int TYPE_PRIZE = 2;
     static final int TYPE_API = 3;
+    static final int TYPE_SHUTTLE = 4;
 
     public GeneralRecyclerViewAdapter(List<GeneralInfo> generalInfoList) {
         this.generalInfoList = generalInfoList;
@@ -42,6 +44,8 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
                 return TYPE_PRIZE;
             case 3:
                 return TYPE_API;
+            case 4:
+                return TYPE_SHUTTLE;
             default:
                 return TYPE_API;
         }
@@ -86,6 +90,13 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
                 return new GeneralViewHolder(view) {
                 };
             }
+
+            case TYPE_SHUTTLE: {
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.shuttle, parent, false);
+                return new GeneralViewHolder(view) {
+                };
+            }
         }
         return null;
     }
@@ -102,6 +113,8 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
             prize_card_recycle = (CardView) v.findViewById(R.id.card_view);
             context = v.getContext();
             prize_card_recycle.setOnClickListener(this);
+
+
         }
 
         @Override
@@ -114,6 +127,11 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
             else if(getAdapterPosition()==4) {
                 final Intent intent;
                 intent = new Intent(context, SponsorActivity.class);
+                context.startActivity(intent);
+            }
+            else if(getAdapterPosition()==5) {
+                final Intent intent;
+                intent = new Intent(context, ShuttleActivity.class);
                 context.startActivity(intent);
             }
         }
@@ -133,6 +151,8 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
             case TYPE_PRIZE:
                 break;
             case TYPE_API:
+                break;
+            case TYPE_SHUTTLE:
                 break;
         }
     }

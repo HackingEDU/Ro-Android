@@ -94,7 +94,7 @@ public class RecyclerViewFragment extends Fragment {
 
     public RecyclerView mRecyclerView;
     public RecyclerViewMaterialAdapter mAdapter;
-    public static final int ITEM_COUNT = 4;
+    public static final int ITEM_COUNT = 5;
 
     public List<GeneralInfo> mContentItems = new ArrayList<GeneralInfo>();
 
