@@ -1,4 +1,4 @@
-package co.hackingedu.ro.Activity;
+package co.hackingedu.ro.Camera;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,9 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
-import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
-import android.hardware.Camera.ShutterCallback;
+import android.hardware.Camera.*;
+
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -180,7 +180,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         if(display.getRotation() == Surface.ROTATION_0)
         {
             parameters.setPreviewSize(height, width);
-            camera.setDisplayOrientation(90);
+            //camera.setDisplayOrientation(90);
         }
 
         if(display.getRotation() == Surface.ROTATION_90)

@@ -1,19 +1,24 @@
 package co.hackingedu.ro.ViewAdapter;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import co.hackingedu.ro.Activity.PrizeActivity;
-import co.hackingedu.ro.Activity.ShuttleActivity;
 import co.hackingedu.ro.Activity.SponsorActivity;
 import co.hackingedu.ro.Info.GeneralInfo;
 import co.hackingedu.ro.R;
@@ -104,22 +109,32 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
     public static class GeneralViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mText;
-        public CardView prize_card_recycle;
+        public CardView card_recycle;
         private final Context context;
 
         public GeneralViewHolder(View v) {
             super(v);
             mText = (TextView) v.findViewById(R.id.wifi_name);
-            prize_card_recycle = (CardView) v.findViewById(R.id.card_view);
+            card_recycle = (CardView) v.findViewById(R.id.card_view);
             context = v.getContext();
-            prize_card_recycle.setOnClickListener(this);
+            card_recycle.setOnClickListener(this);
 
 
         }
 
         @Override
         public void onClick(View v) {
-            if(getAdapterPosition()==3) {
+
+
+            if(getAdapterPosition()==1){
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("wifi","inventthefuture");
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(context, "Wifi Password copied to clipboard!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            else if(getAdapterPosition()==3) {
                 final Intent intent;
                 intent = new Intent(context, PrizeActivity.class);
                 context.startActivity(intent);
@@ -130,9 +145,21 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
                 context.startActivity(intent);
             }
             else if(getAdapterPosition()==5) {
-                final Intent intent;
-                intent = new Intent(context, ShuttleActivity.class);
-                context.startActivity(intent);
+
+                String url = "http://www.hackingedu.co/live/#linkTransport";
+                try {
+                    Intent i = new Intent("android.intent.action.MAIN");
+                    i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                    i.addCategory("android.intent.category.LAUNCHER");
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+                catch(ActivityNotFoundException e) {
+                    // Chrome is not installed
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(i);
+                }
+
             }
         }
     }

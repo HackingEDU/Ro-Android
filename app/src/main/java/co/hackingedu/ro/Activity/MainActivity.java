@@ -22,6 +22,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
+import co.hackingedu.ro.Camera.CameraActivity;
 import co.hackingedu.ro.R;
 import co.hackingedu.ro.backend.CacheManager;
 import co.hackingedu.ro.fragment.FaqViewFragment;
@@ -258,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
 
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+
+
     }
 
     @Override
