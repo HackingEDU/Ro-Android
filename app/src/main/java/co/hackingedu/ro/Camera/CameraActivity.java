@@ -180,7 +180,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         if(display.getRotation() == Surface.ROTATION_0)
         {
             parameters.setPreviewSize(height, width);
-            //camera.setDisplayOrientation(90);
+            camera.setDisplayOrientation(90);
         }
 
         if(display.getRotation() == Surface.ROTATION_90)

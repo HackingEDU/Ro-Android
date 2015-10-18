@@ -124,14 +124,11 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
 
         @Override
         public void onClick(View v) {
-
-
             if(getAdapterPosition()==1){
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("wifi","inventthefuture");
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(context, "Wifi Password copied to clipboard!", Toast.LENGTH_SHORT).show();
-
             }
 
             else if(getAdapterPosition()==3) {
@@ -140,9 +137,19 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
                 context.startActivity(intent);
             }
             else if(getAdapterPosition()==4) {
-                final Intent intent;
-                intent = new Intent(context, SponsorActivity.class);
-                context.startActivity(intent);
+                String url = "http://hackingedu.co/#sponsors";
+                try {
+                    Intent i = new Intent("android.intent.action.MAIN");
+                    i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                    i.addCategory("android.intent.category.LAUNCHER");
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+                catch(ActivityNotFoundException e) {
+                    // Chrome is not installed
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(i);
+                }
             }
             else if(getAdapterPosition()==5) {
 

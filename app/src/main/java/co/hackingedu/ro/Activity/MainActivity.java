@@ -286,6 +286,21 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }
 
+        if (item.getItemId() == R.id.action_help)
+        {
+           /* Create the Intent */
+            final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+    /* Fill it with Data */
+            emailIntent.setType("plain/text");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"team@hackingedu.co"});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Help");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I just need some help with...");
+
+    /* Send it off to the Activity-Chooser */
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }
