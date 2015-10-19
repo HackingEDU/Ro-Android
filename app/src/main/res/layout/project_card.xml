@@ -36,7 +36,7 @@
         <co.hackingedu.ro.style.LatoTextView
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:text="Project must be submitted to http://www.hackingedu.devpost.com by 10:00am, Oct. 25th or else your team won’t be eligible for prizes."
+        android:text="Project must be submitted to http://hackingedu.devpost.com/ by 10:00am, Oct. 25th or else your team won’t be eligible for prizes."
         android:textColor="#000000"
         android:id="@+id/project_submission"
         android:layout_gravity="right|center_vertical"

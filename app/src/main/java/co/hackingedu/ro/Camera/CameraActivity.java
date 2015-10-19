@@ -49,6 +49,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
      * static context to use later!
      */
     private static Context context;
+    ImageView capture;
 
     Camera camera;
     SurfaceView surfaceView;
@@ -100,7 +101,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         this.addContentView(viewControl, layoutParamsControl);
 
         // TODO: takepicture lol
-        ImageView capture = (ImageView) findViewById(R.id.takepicture);
+        capture = (ImageView) findViewById(R.id.takepicture);
         capture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 camera.takePicture(myShutterCallback,
@@ -113,6 +114,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         @Override
         public void onShutter() {
             // TODO Auto-generated method stub
+            camera.setDisplayOrientation(90);
+
 
         }};
 
@@ -127,6 +130,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
 
+            capture.setVisibility(View.GONE);
             // TODO Auto-generated method stub
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
@@ -164,6 +168,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                     .createIntent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            capture.setVisibility(View.VISIBLE);
         }};
 
     @Override
@@ -238,6 +243,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         camera.release();
         camera = null;
         previewing = false;
+    }
+
+    public static Bitmap RotateBitmap(Bitmap source, float angle)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
 
