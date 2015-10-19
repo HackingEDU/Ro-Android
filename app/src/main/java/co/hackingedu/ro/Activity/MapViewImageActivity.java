@@ -88,11 +88,12 @@ public class MapViewImageActivity extends Activity {
             Log.i(TAG, "mapURL: " + mapURL);
 
             // convert url to drawable bitmap image
-            BitmapDrawable d = new BitmapDrawable(App.getAppContext().getResources(),
-                    getBitmapFromURL(mapURL));
+            //BitmapDrawable d = new BitmapDrawable(App.getAppContext().getResources(),
+            //        getBitmapFromURL(mapURL));
 
             // set background to drawable bitmap
-            view.setBackground(d);
+            //view.setBackground(d);
+
         }
     }
 
