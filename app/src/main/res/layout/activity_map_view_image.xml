@@ -1,3 +1,4 @@
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -9,3 +10,13 @@
     android:touchscreenBlocksFocus="false"
     android:id="@+id/map_view_image_activity">
 </RelativeLayout>
+-->
+
+<co.hackingedu.ro.style.TouchImageView
+    android:id="@+id/map_view_image_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="co.hackingedu.ro.Activity.MapViewImageActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/sanmateo_map"/>
