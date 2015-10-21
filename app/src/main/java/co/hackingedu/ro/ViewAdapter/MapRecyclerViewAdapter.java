@@ -104,7 +104,7 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
             //you can use get adapter position to get the position of the recycler item
             //put Extra to save Data
             Intent i = new Intent(context, MapViewImageActivity.class);
-            try {
+            /*try {
 
                 String mapImage = (String) ((JSONObject)
                         mapArray.get(getAdapterPosition()-1)).get(INTENT_EXTRA_IMAGE_KEY);
@@ -119,7 +119,7 @@ public class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerView
                 i.putExtra(INTENT_EXTRA_MAP_KEY, mapMap);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
             context.startActivity(i);
         }
     }

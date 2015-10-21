@@ -43,7 +43,7 @@
         <co.hackingedu.ro.style.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password: inventthefuture"
+        android:text="Password: cheggrocks"
         android:textColor="#000000"
         android:id="@+id/password"
         android:layout_gravity="center_horizontal|bottom"

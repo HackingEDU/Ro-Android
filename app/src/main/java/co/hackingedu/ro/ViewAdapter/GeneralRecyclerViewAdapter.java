@@ -126,7 +126,7 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
         public void onClick(View v) {
             if(getAdapterPosition()==1){
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("wifi","inventthefuture");
+                ClipData clip = ClipData.newPlainText("wifi","cheggrocks");
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(context, "Wifi Password copied to clipboard!", Toast.LENGTH_SHORT).show();
             }
@@ -153,7 +153,7 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
             }
             else if(getAdapterPosition()==5) {
 
-                String url = "http://www.hackingedu.co/live/#linkTransport";
+                String url = "http://www.hackingedu.co/live/#shuttles";
                 try {
                     Intent i = new Intent("android.intent.action.MAIN");
                     i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));

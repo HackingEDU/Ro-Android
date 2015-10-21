@@ -26,8 +26,8 @@
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
             android:adjustViewBounds="true"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"
+            android:maxWidth="32dp"
+            android:maxHeight="32dp"
             android:scaleType="fitCenter" />
 
         <co.hackingedu.ro.style.LatoTextView

@@ -133,6 +133,7 @@ public class ScheduleViewFragment extends Fragment {
                 eventArray));
 
         // loop through each event in JSON Array and do frontend stuff!
+
         for (int i = 0; i < eventArray.length(); i++)
         {
             ScheduleInfo item = new ScheduleInfo();

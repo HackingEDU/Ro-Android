@@ -154,17 +154,12 @@ public class MapViewFragment extends Fragment {
 //        }
 
         // loop through each map in JSON Array and do frontend stuff!
-        for (int i = 0; i < mapsArray.length(); i++)
-        {
+
             MapInfo item = new MapInfo();
-            try {
-                // parsing array into String
-                item.map_text = (String) ((JSONObject) mapsArray.get(i)).get(MAP_QUERY);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            // parsing array into String
+            item.map_text = "Click for Map";
             mContentItems.add(item);
-        }
+
 
         // static cards
 //        MapInfo item1 = new MapInfo();
