@@ -1,7 +1,7 @@
 package co.hackingedu.ro.Activity;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         setTitle("");
 
@@ -283,8 +283,14 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_camera)
         {
             //open camera
-            Intent i = new Intent(this, CameraActivity.class);
-            startActivity(i);
+
+            //crashing rn so replace with temp solution
+            /*Intent i = new Intent(this, CameraActivity.class);
+            startActivity(i);*/
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            startActivityForResult(intent, 0);
+            Toast.makeText(getApplicationContext(), "Take a Photo with #HackingEDU and enter our Photo Contest! Upload to Twitter and Instagram!", Toast.LENGTH_LONG).show();
+
         }
 
         if (item.getItemId() == R.id.action_help)

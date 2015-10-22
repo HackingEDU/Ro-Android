@@ -5,32 +5,22 @@ package co.hackingedu.ro.Activity;
  */
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.hackingedu.ro.Info.PrizeInfo;
 import co.hackingedu.ro.Info.ShuttleInfo;
-import co.hackingedu.ro.Info.SponsorInfo;
 import co.hackingedu.ro.R;
-import co.hackingedu.ro.ViewAdapter.PrizeRecyclerViewAdapter;
 import co.hackingedu.ro.ViewAdapter.ShuttleRecyclerViewAdapter;
-import co.hackingedu.ro.backend.CacheManager;
 
 
 public class ShuttleActivity extends Activity {
@@ -42,6 +32,7 @@ public class ShuttleActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.fragment_recyclerview);
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
