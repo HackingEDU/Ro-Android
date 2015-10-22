@@ -132,9 +132,25 @@ public class GeneralRecyclerViewAdapter extends RecyclerView.Adapter<GeneralRecy
             }
 
             else if(getAdapterPosition()==3) {
-                final Intent intent;
+                /*final Intent intent;
                 intent = new Intent(context, PrizeActivity.class);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
+
+                String url = "http://www.hackingedu.co/live/#prizes";
+                try {
+                    Intent i = new Intent("android.intent.action.MAIN");
+                    i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                    i.addCategory("android.intent.category.LAUNCHER");
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+                catch(ActivityNotFoundException e) {
+                    // Chrome is not installed
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(i);
+                }
+
+
             }
             else if(getAdapterPosition()==4) {
                 String url = "http://hackingedu.co/#sponsors";
